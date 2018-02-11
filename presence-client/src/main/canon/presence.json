@@ -1,0 +1,240 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"version": "0.0.1",
+		"title": "Japigen Simple RPC Test Case",
+		"license": {
+			"name": "Apache2"
+		}
+	},
+	"x-canon-id": "https://github.com/bruceskingle/canon/blob/master/canon-test/src/main/resources/test/presence.json",
+  "x-canon-base-path": "/presence/v2",
+  "x-canon-model": {
+		"javaGenPackage": "org.symphonyoss.s2.canon.example.presence.canon",
+		"javaFacadePackage": "org.symphonyoss.s2.canon.example.presence.facade"
+	},
+	"paths": {
+		
+	},
+	"x-canon-methods": {
+		"/users": {
+      "summary": "Fetch all users' presence.",
+      "parameterSets": [
+        "#/components/x-canon-parameter-sets/pagination"
+      ],
+      "get": {
+        "response": {
+          "schema": {
+            "$ref": "#/components/schemas/UserPresencePage"
+          }
+        }
+      },
+      "put": {
+        "summary": "A weird no payload and no response mehod."
+      }
+    },
+    "/users/{userId}": {
+      "summary": "Manipulate a single user's presence.",
+      "parameters": {
+        "userId": {
+          "in": "path",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/UserId"
+          }
+        }
+      },
+      "get": {
+        "summary": "Fetch a single user's presence.",
+        "response": {
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/UserPresence"
+          }
+        }
+      },
+      "put": {
+        "summary": "Set a single user's presence.",
+        "payload": {
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/UserPresenceInfo"
+          }
+        }
+      }
+    },
+    "/users/{userId}/test": {
+      "summary": "Manipulate a single user's presence.",
+      "parameters": {
+        "userId": {
+          "in": "path",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/UserId"
+          }
+        }
+      },
+      "get": {
+        "summary": "Fetch a single user's presence.",
+        "response": {
+          "schema": {
+            "$ref": "#/components/schemas/UserPresence"
+          }
+        }
+      }
+    },
+    "/users/update": {
+      "summary": "Manipulate a batch of users' presence.",
+      "post": {
+        "payload": {
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/UserPresenceList"
+          }
+        }
+      }
+    },
+    "/users/fetch": {
+      "summary": "Fetch a batch of users' presence.",
+      "post": {
+        "payload": {
+          "required": true,
+          "multiple": true,
+          "schema": {
+            "$ref": "#/components/schemas/UserId"
+          }
+        },
+        "response": {
+          "required": false,
+          "multiple": true,
+          "schema": {
+            "$ref": "#/components/schemas/UserPresence"
+          }
+        }
+      }
+    }
+	},
+	"components": {
+		"schemas": {
+			"UserId": {
+        "summary": "A Symphony external user ID.",
+        "type": "integer",
+        "format": "int64",
+        "minimum": 0
+      },
+      "Cursor": {
+        "summary": "A request cursor.",
+        "description": "An opaque token returned by the server to allow the next page to be requested.",
+        "type": "string",
+        "format": "byte"
+      },
+      "CursorLimit": {
+        "summary": "A cursor limit, the max number of records to return.",
+        "type": "integer",
+        "format": "int32",
+        "minimum": 0,
+        "maximum": 50
+      },
+      "CursorInfo": {
+        "summary": "Links to the next and prev pages.",
+        "type": "object",
+
+        "properties": {
+          "previous": {
+            "$ref": "#/components/schemas/Cursor"
+          },
+          "next": {
+            "$ref": "#/components/schemas/Cursor"
+          }
+        }
+      },
+      "PresenceStatus": {
+				"summary": "A presence status.",
+				"type": "string",
+				"enum": [
+					"Offline",
+					"Available",
+					"Busy",
+					"DoNotDisturb",
+					"OnThePhone"
+				]
+			},
+      "UserPresenceInfo": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/PresenceStatus"
+          },
+          "text": {
+            "summary": "A short message set by the user.",
+            "type": "string"
+          }
+        }
+      },
+      "UserPresence": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "$ref": "#/components/schemas/UserId"
+          },
+          "status": {
+            "$ref": "#/components/schemas/PresenceStatus"
+          },
+          "text": {
+            "summary": "A short message set by the user.",
+            "type": "string"
+          }
+        }
+      },
+      "UserPresenceList": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "summary": "A list of user status records.",
+            "type": "array",
+            "x-canon-cardinality": "LIST",
+            "items": {
+              "$ref": "#/components/schemas/UserPresence"
+            }
+          }
+        }
+      },
+      "UserPresencePage": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "summary": "A list of user status records.",
+            "type": "array",
+            "x-canon-cardinality": "LIST",
+            "items": {
+              "$ref": "#/components/schemas/UserPresence"
+            }
+          },
+          "cursors": {
+            "$ref": "#/components/schemas/CursorInfo"
+          }
+        }
+      }
+		},
+		"x-canon-parameter-sets": {
+			"pagination": {
+				"cursor": {
+					"summary": "Cursor position",
+					"in": "query",
+					"required": false,
+					"schema": {
+						"$ref": "#/components/schemas/Cursor"
+					}
+				},
+        "limit": {
+          "summary": "max records to return",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/CursorLimit"
+          }
+        }
+			}
+		}
+	}
+}

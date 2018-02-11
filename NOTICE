@@ -1,0 +1,18 @@
+Symphony Canon
+Copyright 2017-2018 Symphony Communication Services, LLC.
+http://symphony.com/
+
+========================================================================
+List of Category B Licenses
+========================================================================
+CDDL + GPLv2 with classpath exception javax.servlet-api(javax.servlet)
+CDDL-GPLv2+CE   mailapi(javax.mail) 
+Mozilla Public License, Version 2.0     rhino(org.mozilla)
+Common Development and Distribution License (CDDL) v1.0    activation(javax.activation)
+========================================================================
+ Eclipse Public License 1.0
+ ========================================================================
+The following components are provided under the Eclipse Public License 1.0. See project link for details.
+
+Eclipse Public License - v 1.0-GNU Lesser General Public license  logback-classic(ch.qos.logback)
+Eclipse Public License - v 1.0-GNU Lesser General Public License  logback-core(ch.qos.logback)
