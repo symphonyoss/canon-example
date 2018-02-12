@@ -73,7 +73,7 @@
 		<canon.template.java>canon-template-java</canon.template.java>
 		<canon.template.version>${canon.version}</canon.template.version>
 		
-		
+		<fugue.version>0.0.2-SNAPSHOT</fugue.version>
     <gcp.project>sym-dev-arch</gcp.project>
 	</properties>
 
@@ -129,6 +129,17 @@
 				<artifactId>canon-runtime-java</artifactId>
 				<version>${canon.template.version}</version>
 			</dependency>
+			
+			<dependency>
+        <groupId>org.symphonyoss.s2.fugue</groupId>
+        <artifactId>fugue-core</artifactId>
+        <version>${fugue.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.symphonyoss.s2.fugue</groupId>
+        <artifactId>fugue-di</artifactId>
+        <version>${fugue.version}</version>
+      </dependency>
 
 			<dependency>
 				<groupId>com.google.code.findbugs</groupId>

@@ -30,7 +30,6 @@ import javax.annotation.concurrent.Immutable;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersAsyncPathHandler;
 import org.symphonyoss.s2.canon.example.presence.facade.Cursor;
 import org.symphonyoss.s2.canon.example.presence.facade.CursorLimit;
-import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.example.presence.facade.UserPresence;
 import org.symphonyoss.s2.canon.example.presence.facade.UserPresencePage;
 import org.symphonyoss.s2.canon.example.presence.facade.UserPresencePage.Factory.Builder;
@@ -48,9 +47,9 @@ import org.symphonyoss.s2.canon.runtime.exception.JapiException;
 @Immutable
 public class UsersAsyncHandler extends UsersAsyncPathHandler
 {
-  public UsersAsyncHandler(IPresence model, ExecutorService processExecutor, ExecutorService responseExecutor)
+  public UsersAsyncHandler(ExecutorService processExecutor, ExecutorService responseExecutor)
   {
-    super(model, processExecutor, responseExecutor);
+    super(processExecutor, responseExecutor);
   }
 
   @Override

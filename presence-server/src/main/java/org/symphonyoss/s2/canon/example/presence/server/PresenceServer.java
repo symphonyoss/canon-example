@@ -29,26 +29,33 @@ import java.util.concurrent.Executors;
 
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceModelServlet;
 import org.symphonyoss.s2.canon.example.presence.facade.Presence;
-import org.symphonyoss.s2.canon.runtime.AbstractServer;
-import org.symphonyoss.s2.canon.runtime.IModelRegistry;
+import org.symphonyoss.s2.fugue.FugueServer;
+import org.symphonyoss.s2.fugue.di.IDIContext;
+import org.symphonyoss.s2.fugue.di.component.impl.Slf4jLogComponent;
 
-public class PresenceServer extends AbstractServer
+public class PresenceServer extends FugueServer
 {
-  private Presence  model_ = new Presence();
-  ExecutorService     executor_ = Executors.newFixedThreadPool(50);
+  private Presence model_    = new Presence();
+  ExecutorService  executor_ = Executors.newFixedThreadPool(50);
+  
+  public PresenceServer()
+  {
+    super("PresenceServer", 8080);
+  }
   
   @Override
-  public void registerModels(IModelRegistry registry)
+  public void registerComponents(IDIContext diContext)
   {
-    registry.register(model_);
-    registry.register(new PresenceModelServlet(model_, 
-        //new UsersHandler(model_),
-        new UsersAsyncHandler(model_, executor_, executor_),
-        new UsersUserIdHandler(model_),
-        new UsersUserIdTestHandler(model_),
-//        new UsersUpdateHandler(model_),
-        new UsersUpdateAsyncHandler(model_, executor_, executor_))
-        );
+    diContext.register(new Slf4jLogComponent())
+      .register(model_)
+      .register(new PresenceModelServlet())
+      //.register(new UsersHandler())
+      .register(new UsersAsyncHandler(executor_, executor_))
+      .register(new UsersUserIdHandler())
+      .register(new UsersUserIdTestHandler())
+      //.register(new UsersUpdateHandler())
+      .register(new UsersUpdateAsyncHandler(executor_, executor_)
+    );
   }
 
   public static void main(String[] argv) throws IOException

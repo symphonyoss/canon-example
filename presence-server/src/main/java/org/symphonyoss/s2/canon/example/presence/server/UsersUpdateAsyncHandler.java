@@ -29,13 +29,12 @@ import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.symphonyoss.s2.common.exception.BadFormatException;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUpdateAsyncPathHandler;
-import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.example.presence.facade.UserPresence;
 import org.symphonyoss.s2.canon.example.presence.facade.UserPresenceList;
 import org.symphonyoss.s2.canon.runtime.exception.JapiException;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
+import org.symphonyoss.s2.common.exception.BadFormatException;
 
 /**
  * Facade for Path name=UsersUpdate
@@ -50,9 +49,9 @@ public class UsersUpdateAsyncHandler extends UsersUpdateAsyncPathHandler
 {
   private static final Logger log_ = LoggerFactory.getLogger(UsersUpdateAsyncHandler.class);
   
-  public UsersUpdateAsyncHandler(IPresence model, ExecutorService processExecutor, ExecutorService responseExecutor)
+  public UsersUpdateAsyncHandler(ExecutorService processExecutor, ExecutorService responseExecutor)
   {
-    super(model, processExecutor, responseExecutor);
+    super(processExecutor, responseExecutor);
   }
   
   /**

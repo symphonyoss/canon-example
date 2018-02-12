@@ -27,7 +27,6 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUserIdPathHandler;
-import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.example.presence.facade.UserId;
 import org.symphonyoss.s2.canon.example.presence.facade.UserPresence;
 import org.symphonyoss.s2.canon.example.presence.facade.UserPresenceInfo;
@@ -44,11 +43,6 @@ import org.symphonyoss.s2.canon.runtime.exception.JapiException;
 @Immutable
 public class UsersUserIdHandler extends UsersUserIdPathHandler
 {
-  public UsersUserIdHandler(IPresence model)
-  {
-    super(model);
-  }
-  
   /**
    * get /users/{userId}
    * Fetch a single user's presence.

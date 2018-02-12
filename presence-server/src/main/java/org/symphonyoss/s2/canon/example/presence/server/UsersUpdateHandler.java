@@ -48,11 +48,6 @@ public class UsersUpdateHandler extends UsersUpdatePathHandler
 {
   private static final Logger log_ = LoggerFactory.getLogger(UsersUpdateHandler.class);
   
-  public UsersUpdateHandler(IPresence model)
-  {
-    super(model);
-  }
-  
   /**
    * post /users/update
    * No summary given.

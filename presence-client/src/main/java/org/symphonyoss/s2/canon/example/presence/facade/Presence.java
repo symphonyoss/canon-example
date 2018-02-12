@@ -34,20 +34,25 @@ package org.symphonyoss.s2.canon.example.presence.facade;
 import java.util.Collection;
 import java.util.TreeMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.symphonyoss.s2.common.exception.BadFormatException;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceModel;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceStatus;
 import org.symphonyoss.s2.canon.example.presence.facade.UserPresence.Factory.Builder;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
+import org.symphonyoss.s2.common.exception.BadFormatException;
+import org.symphonyoss.s2.common.fault.ProgramFault;
+import org.symphonyoss.s2.fugue.di.ComponentDescriptor;
 
 public class Presence extends PresenceModel implements IPresence
 {
-  private static final Logger log_ = LoggerFactory.getLogger(Presence.class);
-  
   private TreeMap<UserId, UserPresence> presenceMap_ = new TreeMap<>();
   
+  @Override
+  public ComponentDescriptor getComponentDescriptor()
+  {
+    return super.getComponentDescriptor()
+        .addStart(() -> initialize());
+  }
+
   @Override
   public synchronized Collection<UserPresence> getAllUsers()
   {
@@ -76,64 +81,45 @@ public class Presence extends PresenceModel implements IPresence
       throw new ServerErrorException(e);
     }
   }
-
-  /**
-   * This method will be called once by a server before any other model methods are called.
-   * 
-   */
-  @Override
-  public void start()
-  {
-    try
-    {
-      initialize();
-    }
-    catch (BadFormatException e)
-    {
-      log_.error("Failed to initialize", e);
-    }
-    
-  }
   
-  private void initialize() throws BadFormatException
+  private void initialize()
   {
     /* Load presence data for known users */
     
-    Builder presenceBuilder = getUserPresenceFactory().newBuilder();
-    UserId userId;
-    
-    userId = UserId.newBuilder().build((long) 1);
-    
-    presenceBuilder.withUserId(userId);
-    presenceBuilder.withStatus(PresenceStatus.Available);
-    presenceBuilder.withText("I'm Free!");
-    
-    presenceMap_.put(userId, presenceBuilder.build());
-    
-    userId = UserId.newBuilder().build((long) 2);
-    
-    presenceBuilder.withUserId(userId);
-    presenceBuilder.withStatus(PresenceStatus.Available);
-    presenceBuilder.withText("Talk to me!");
-    
-    presenceMap_.put(userId, presenceBuilder.build());
-    
-
-    userId = UserId.newBuilder().build((long) 3);
-    
-    presenceBuilder.withUserId(userId);
-    presenceBuilder.withStatus(PresenceStatus.Busy);
-    presenceBuilder.withText("");
-    
-    presenceMap_.put(userId, presenceBuilder.build());
-  }
-
-  /**
-   * This method will be called once by a server before it is shut down.
-   */
-  @Override
-  public void stop()
-  {
+    try
+    {
+      Builder presenceBuilder = getUserPresenceFactory().newBuilder();
+      UserId userId;
+      
+      userId = UserId.newBuilder().build((long) 1);
+      
+      presenceBuilder.withUserId(userId);
+      presenceBuilder.withStatus(PresenceStatus.Available);
+      presenceBuilder.withText("I'm Free!");
+      
+      presenceMap_.put(userId, presenceBuilder.build());
+      
+      userId = UserId.newBuilder().build((long) 2);
+      
+      presenceBuilder.withUserId(userId);
+      presenceBuilder.withStatus(PresenceStatus.Available);
+      presenceBuilder.withText("Talk to me!");
+      
+      presenceMap_.put(userId, presenceBuilder.build());
+      
+  
+      userId = UserId.newBuilder().build((long) 3);
+      
+      presenceBuilder.withUserId(userId);
+      presenceBuilder.withStatus(PresenceStatus.Busy);
+      presenceBuilder.withText("");
+      
+      presenceMap_.put(userId, presenceBuilder.build());
+    }
+    catch(BadFormatException e)
+    {
+      throw new ProgramFault(e);
+    }
   }
 }
 /*----------------------------------------------------------------------------------------------------
