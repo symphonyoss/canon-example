@@ -1,5 +1,5 @@
 {
-	"openapi": "3.0.0",
+	"canon": "0.0.1",
 	"info": {
 		"version": "0.0.1",
 		"title": "Japigen Simple RPC Test Case",
@@ -7,20 +7,17 @@
 			"name": "Apache2"
 		}
 	},
-	"x-canon-id": "https://github.com/bruceskingle/canon/blob/master/canon-test/src/main/resources/test/presence.json",
-  "x-canon-base-path": "/presence/v2",
-  "x-canon-model": {
+	"id": "https://github.com/bruceskingle/canon/blob/master/canon-test/src/main/resources/test/presence.json",
+  "basePath": "/presence/v2",
+  "model": {
 		"javaGenPackage": "org.symphonyoss.s2.canon.example.presence.canon",
 		"javaFacadePackage": "org.symphonyoss.s2.canon.example.presence.facade"
 	},
-	"paths": {
-		
-	},
-	"x-canon-methods": {
+	"methods": {
 		"/users": {
-      "summary": "Fetch all users' presence.",
+      "description": "Fetch all users' presence.",
       "parameterSets": [
-        "#/components/x-canon-parameter-sets/pagination"
+        "#/components/parameterSets/pagination"
       ],
       "get": {
         "response": {
@@ -30,11 +27,11 @@
         }
       },
       "put": {
-        "summary": "A weird no payload and no response mehod."
+        "description": "A weird no payload and no response mehod."
       }
     },
     "/users/{userId}": {
-      "summary": "Manipulate a single user's presence.",
+      "description": "Manipulate a single user's presence.",
       "parameters": {
         "userId": {
           "in": "path",
@@ -45,7 +42,7 @@
         }
       },
       "get": {
-        "summary": "Fetch a single user's presence.",
+        "description": "Fetch a single user's presence.",
         "response": {
           "required": false,
           "schema": {
@@ -54,7 +51,7 @@
         }
       },
       "put": {
-        "summary": "Set a single user's presence.",
+        "description": "Set a single user's presence.",
         "payload": {
           "required": true,
           "schema": {
@@ -64,7 +61,7 @@
       }
     },
     "/users/{userId}/test": {
-      "summary": "Manipulate a single user's presence.",
+      "description": "Manipulate a single user's presence.",
       "parameters": {
         "userId": {
           "in": "path",
@@ -75,7 +72,7 @@
         }
       },
       "get": {
-        "summary": "Fetch a single user's presence.",
+        "description": "Fetch a single user's presence.",
         "response": {
           "schema": {
             "$ref": "#/components/schemas/UserPresence"
@@ -84,7 +81,7 @@
       }
     },
     "/users/update": {
-      "summary": "Manipulate a batch of users' presence.",
+      "description": "Manipulate a batch of users' presence.",
       "post": {
         "payload": {
           "required": true,
@@ -95,7 +92,7 @@
       }
     },
     "/users/fetch": {
-      "summary": "Fetch a batch of users' presence.",
+      "description": "Fetch a batch of users' presence.",
       "post": {
         "payload": {
           "required": true,
@@ -117,26 +114,25 @@
 	"components": {
 		"schemas": {
 			"UserId": {
-        "summary": "A Symphony external user ID.",
+        "description": "A Symphony external user ID.",
         "type": "integer",
         "format": "int64",
         "minimum": 0
       },
       "Cursor": {
-        "summary": "A request cursor.",
         "description": "An opaque token returned by the server to allow the next page to be requested.",
         "type": "string",
         "format": "byte"
       },
       "CursorLimit": {
-        "summary": "A cursor limit, the max number of records to return.",
+        "description": "A cursor limit, the max number of records to return.",
         "type": "integer",
         "format": "int32",
         "minimum": 0,
         "maximum": 50
       },
       "CursorInfo": {
-        "summary": "Links to the next and prev pages.",
+        "description": "Links to the next and prev pages.",
         "type": "object",
 
         "properties": {
@@ -149,7 +145,7 @@
         }
       },
       "PresenceStatus": {
-				"summary": "A presence status.",
+				"description": "A presence status.",
 				"type": "string",
 				"enum": [
 					"Offline",
@@ -166,7 +162,7 @@
             "$ref": "#/components/schemas/PresenceStatus"
           },
           "text": {
-            "summary": "A short message set by the user.",
+            "description": "A short message set by the user.",
             "type": "string"
           }
         }
@@ -181,7 +177,7 @@
             "$ref": "#/components/schemas/PresenceStatus"
           },
           "text": {
-            "summary": "A short message set by the user.",
+            "description": "A short message set by the user.",
             "type": "string"
           }
         }
@@ -190,7 +186,7 @@
         "type": "object",
         "properties": {
           "data": {
-            "summary": "A list of user status records.",
+            "description": "A list of user status records.",
             "type": "array",
             "x-canon-cardinality": "LIST",
             "items": {
@@ -203,7 +199,7 @@
         "type": "object",
         "properties": {
           "data": {
-            "summary": "A list of user status records.",
+            "description": "A list of user status records.",
             "type": "array",
             "x-canon-cardinality": "LIST",
             "items": {
@@ -216,10 +212,10 @@
         }
       }
 		},
-		"x-canon-parameter-sets": {
+		"parameterSets": {
 			"pagination": {
 				"cursor": {
-					"summary": "Cursor position",
+					"description": "Cursor position",
 					"in": "query",
 					"required": false,
 					"schema": {
@@ -227,7 +223,7 @@
 					}
 				},
         "limit": {
-          "summary": "max records to return",
+          "description": "max records to return",
           "in": "query",
           "required": false,
           "schema": {
