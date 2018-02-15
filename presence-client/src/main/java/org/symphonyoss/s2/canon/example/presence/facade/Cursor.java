@@ -35,7 +35,7 @@ import javax.annotation.concurrent.Immutable;
 
 import com.google.protobuf.ByteString;
 
-import org.symphonyoss.s2.canon.example.presence.canon.CursorModelType;
+import org.symphonyoss.s2.canon.example.presence.canon.CursorTypeDef;
 import org.symphonyoss.s2.common.exception.BadFormatException;
 
 /**
@@ -44,7 +44,7 @@ import org.symphonyoss.s2.common.exception.BadFormatException;
  * Formatted as Base64 encoded bytes
  */
 @Immutable
-public class Cursor extends CursorModelType
+public class Cursor extends CursorTypeDef
 {
   private static Builder theBuilder = new Builder();
   
@@ -62,7 +62,7 @@ public class Cursor extends CursorModelType
     return theBuilder;
   }
   
-  public static class Builder extends CursorModelType.Builder
+  public static class Builder extends CursorTypeDef.Builder
   {
     private Builder()
     {

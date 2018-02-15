@@ -33,7 +33,7 @@ package org.symphonyoss.s2.canon.example.presence.facade;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import org.symphonyoss.s2.canon.example.presence.canon.CursorLimitModelType;
+import org.symphonyoss.s2.canon.example.presence.canon.CursorLimitTypeDef;
 import org.symphonyoss.s2.common.exception.BadFormatException;
 
 /**
@@ -42,7 +42,7 @@ import org.symphonyoss.s2.common.exception.BadFormatException;
  * maximum 50
  */
 @Immutable
-public class CursorLimit extends CursorLimitModelType
+public class CursorLimit extends CursorLimitTypeDef
 {
   private static Builder theBuilder = new Builder();
   
@@ -60,7 +60,7 @@ public class CursorLimit extends CursorLimitModelType
     return theBuilder;
   }
   
-  public static class Builder extends CursorLimitModelType.Builder
+  public static class Builder extends CursorLimitTypeDef.Builder
   {
     private Builder()
     {

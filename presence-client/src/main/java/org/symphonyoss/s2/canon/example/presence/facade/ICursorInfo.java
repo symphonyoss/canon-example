@@ -32,7 +32,7 @@ package org.symphonyoss.s2.canon.example.presence.facade;
 
 import javax.annotation.concurrent.Immutable;
 
-import org.symphonyoss.s2.canon.example.presence.canon.ICursorInfoModelObject;
+import org.symphonyoss.s2.canon.example.presence.canon.ICursorInfoEntity;
 
 /**
  * Facade for Object Object(CursorInfo)
@@ -40,7 +40,7 @@ import org.symphonyoss.s2.canon.example.presence.canon.ICursorInfoModelObject;
  * Links to the next and prev pages.
  */
 @Immutable
-public interface ICursorInfo extends ICursorInfoModelObject
+public interface ICursorInfo extends ICursorInfoEntity
 {
 }
 /*----------------------------------------------------------------------------------------------------

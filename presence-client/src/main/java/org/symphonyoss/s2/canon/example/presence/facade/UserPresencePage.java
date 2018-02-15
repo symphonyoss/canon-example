@@ -32,7 +32,8 @@ package org.symphonyoss.s2.canon.example.presence.facade;
 
 import javax.annotation.concurrent.Immutable;
 
-import org.symphonyoss.s2.canon.example.presence.canon.UserPresencePageModelObject;
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresencePageEntity;
+import org.symphonyoss.s2.canon.example.presence.canon.UserPresencePageEntity;
 import org.symphonyoss.s2.common.dom.json.ImmutableJsonObject;
 import org.symphonyoss.s2.common.exception.BadFormatException;
 
@@ -40,20 +41,20 @@ import org.symphonyoss.s2.common.exception.BadFormatException;
  * Facade for Object Object(UserPresencePage)
  */
 @Immutable
-public class UserPresencePage extends UserPresencePageModelObject implements IUserPresencePage
+public class UserPresencePage extends UserPresencePageEntity implements IUserPresencePage
 {
-  private UserPresencePage(UserPresencePage.Factory _factory, IUserPresencePage _other)
+  private UserPresencePage(UserPresencePage.Factory canonFactory, IUserPresencePageEntity canonOther)
   {
-    super(_factory, _other);
+    super(canonFactory, canonOther);
   }
   
 
-  private UserPresencePage(UserPresencePage.Factory _factory, ImmutableJsonObject _jsonObject) throws BadFormatException
+  private UserPresencePage(UserPresencePage.Factory canonFactory, ImmutableJsonObject canonJsonObject) throws BadFormatException
   {
-    super(_factory, _jsonObject);
+    super(canonFactory, canonJsonObject);
   }
   
-  public static class Factory extends UserPresencePageModelObject.Factory
+  public static class Factory extends UserPresencePageEntity.Factory
   {
     public Factory(IPresence model)
     {
@@ -91,7 +92,7 @@ public class UserPresencePage extends UserPresencePageModelObject implements IUs
     }
   
   
-    public static class Builder extends UserPresencePageModelObject.Factory.Builder
+    public static class Builder extends UserPresencePageEntity.Factory.Builder
     {
       Factory factory_;
       

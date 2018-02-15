@@ -32,7 +32,8 @@ package org.symphonyoss.s2.canon.example.presence.facade;
 
 import javax.annotation.concurrent.Immutable;
 
-import org.symphonyoss.s2.canon.example.presence.canon.CursorInfoModelObject;
+import org.symphonyoss.s2.canon.example.presence.canon.CursorInfoEntity;
+import org.symphonyoss.s2.canon.example.presence.canon.ICursorInfoEntity;
 import org.symphonyoss.s2.common.dom.json.ImmutableJsonObject;
 import org.symphonyoss.s2.common.exception.BadFormatException;
 
@@ -42,20 +43,20 @@ import org.symphonyoss.s2.common.exception.BadFormatException;
  * Links to the next and prev pages.
  */
 @Immutable
-public class CursorInfo extends CursorInfoModelObject implements ICursorInfo
+public class CursorInfo extends CursorInfoEntity implements ICursorInfo
 {
-  private CursorInfo(CursorInfo.Factory _factory, ICursorInfo _other)
+  private CursorInfo(CursorInfo.Factory canonFactory, ICursorInfoEntity canonOther)
   {
-    super(_factory, _other);
+    super(canonFactory, canonOther);
   }
   
 
-  private CursorInfo(CursorInfo.Factory _factory, ImmutableJsonObject _jsonObject) throws BadFormatException
+  private CursorInfo(CursorInfo.Factory canonFactory, ImmutableJsonObject canonJsonObject) throws BadFormatException
   {
-    super(_factory, _jsonObject);
+    super(canonFactory, canonJsonObject);
   }
   
-  public static class Factory extends CursorInfoModelObject.Factory
+  public static class Factory extends CursorInfoEntity.Factory
   {
     public Factory(IPresence model)
     {
@@ -93,7 +94,7 @@ public class CursorInfo extends CursorInfoModelObject implements ICursorInfo
     }
   
   
-    public static class Builder extends CursorInfoModelObject.Factory.Builder
+    public static class Builder extends CursorInfoEntity.Factory.Builder
     {
       Factory factory_;
       

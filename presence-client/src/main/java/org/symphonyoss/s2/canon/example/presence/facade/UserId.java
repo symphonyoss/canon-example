@@ -32,14 +32,14 @@ package org.symphonyoss.s2.canon.example.presence.facade;
 
 import javax.annotation.concurrent.Immutable;
 
-import org.symphonyoss.s2.canon.example.presence.canon.UserIdModelType;
+import org.symphonyoss.s2.canon.example.presence.canon.UserIdTypeDef;
 import org.symphonyoss.s2.common.exception.BadFormatException;
 
 /**
  * Facade for
  */
 @Immutable
-public class UserId extends UserIdModelType
+public class UserId extends UserIdTypeDef
 {
   private static Builder theBuilder = new Builder();
   
@@ -53,7 +53,7 @@ public class UserId extends UserIdModelType
     return theBuilder;
   }
   
-  public static class Builder extends UserIdModelType.Builder
+  public static class Builder extends UserIdTypeDef.Builder
   {
     private Builder()
     {}

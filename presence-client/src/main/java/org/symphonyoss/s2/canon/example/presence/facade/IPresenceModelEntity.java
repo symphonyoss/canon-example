@@ -20,28 +20,23 @@
  *
  *----------------------------------------------------------------------------------------------------
  * Proforma generated from
- *		Template groupId		 org.symphonyoss.s2.japigen
+ *		Template groupId		 org.symphonyoss.s2.canon
  *           artifactId canon-template-java
- *		Template name		   proforma/java/Object/I_.java.ftl
+ *		Template name		   proforma/java/Model/I_ModelEntity.java.ftl
  *		Template version	   1.0
- *  At                  2018-01-14 16:40:50 GMT-08:00
+ *  At                  2018-02-14 18:20:04 GMT-08:00
  *----------------------------------------------------------------------------------------------------
  */
 
 package org.symphonyoss.s2.canon.example.presence.facade;
 
-import javax.annotation.concurrent.Immutable;
 
-import org.symphonyoss.s2.canon.example.presence.canon.IUserPresencePageEntity;
+import org.symphonyoss.s2.canon.runtime.IEntity;
 
-/**
- * Facade for Object Object(UserPresencePage)
- */
-@Immutable
-public interface IUserPresencePage extends IUserPresencePageEntity
+public interface IPresenceModelEntity extends IEntity
 {
 }
 /*----------------------------------------------------------------------------------------------------
- * End of template proforma/java/Object/I_.java.ftl
+ * End of template proforma/java/Model/I_ModelEntity.java.ftl
  * End of code generation
  *------------------------------------------------------------------------------------------------- */

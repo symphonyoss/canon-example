@@ -32,13 +32,13 @@ package org.symphonyoss.s2.canon.example.presence.facade;
 
 import javax.annotation.concurrent.Immutable;
 
-import org.symphonyoss.s2.canon.example.presence.canon.IUserPresenceListModelObject;
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresenceListEntity;
 
 /**
  * Facade for Object Object(UserPresenceList)
  */
 @Immutable
-public interface IUserPresenceList extends IUserPresenceListModelObject
+public interface IUserPresenceList extends IUserPresenceListEntity
 {
 }
 /*----------------------------------------------------------------------------------------------------
