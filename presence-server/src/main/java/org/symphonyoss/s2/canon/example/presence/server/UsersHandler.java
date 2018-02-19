@@ -51,11 +51,10 @@ public class UsersHandler extends UsersPathHandler
    * get /users
    * No summary given.
    * 
-   * cursor                    A request cursor.
-   * limit                     A cursor limit, the max number of records to return.
+   * @param cursor                    No summary given.
+   * @param limit                     No summary given.
    * @return A UserPresencePage
-   * @throws PermissionDeniedException        If the caller lacks necessary entitlements for the action
-   * @throws ServerErrorException             If an unexpected error occurred
+   * @throws JapiException                    If the method cannot be called
    */
   @Override
   public @Nonnull UserPresencePage handleGet(

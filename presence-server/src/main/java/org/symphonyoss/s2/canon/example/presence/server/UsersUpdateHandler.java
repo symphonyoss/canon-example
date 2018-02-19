@@ -27,13 +27,12 @@ import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.symphonyoss.s2.common.exception.BadFormatException;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUpdatePathHandler;
-import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.example.presence.facade.UserPresence;
 import org.symphonyoss.s2.canon.example.presence.facade.UserPresenceList;
 import org.symphonyoss.s2.canon.runtime.exception.JapiException;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
+import org.symphonyoss.s2.common.exception.BadFormatException;
 
 /**
  * Facade for Path name=UsersUpdate
@@ -52,8 +51,8 @@ public class UsersUpdateHandler extends UsersUpdatePathHandler
    * post /users/update
    * No summary given.
    * 
-   * @throws PermissionDeniedException        If the caller lacks necessary entitlements for the action
-   * @throws ServerErrorException             If an unexpected error occurred
+   * @param _payload The request payload
+   * @throws JapiException                    If the method cannot be called
    */
   @Override
   public void handlePost(

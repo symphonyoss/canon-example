@@ -45,12 +45,12 @@ public class UsersUserIdHandler extends UsersUserIdPathHandler
 {
   /**
    * get /users/{userId}
+   * No summary given.
    * Fetch a single user's presence.
-   * 
-   * userId                    A Symphony external user ID.
+   * @param userId                    No summary given.
    * @return A UserPresence
-   * @throws PermissionDeniedException        If the caller lacks necessary entitlements for the action
-   * @throws ServerErrorException             If an unexpected error occurred
+   * or <code>null</code>
+   * @throws JapiException                    If the method cannot be called
    */
   @Override
   public @Nullable  UserPresence handleGet(
@@ -65,11 +65,11 @@ public class UsersUserIdHandler extends UsersUserIdPathHandler
 
   /**
    * put /users/{userId}
+   * No summary given.
    * Set a single user's presence.
-   * 
-   * userId                    A Symphony external user ID.
-   * @throws PermissionDeniedException        If the caller lacks necessary entitlements for the action
-   * @throws ServerErrorException             If an unexpected error occurred
+   * @param _payload The request payload
+   * @param userId                    No summary given.
+   * @throws JapiException                    If the method cannot be called
    */
   @Override
   public void handlePut(

@@ -58,8 +58,8 @@ public class UsersUpdateAsyncHandler extends UsersUpdateAsyncPathHandler
    * post /users/update
    * No summary given.
    * 
-   * @throws PermissionDeniedException        If the caller lacks necessary entitlements for the action
-   * @throws ServerErrorException             If an unexpected error occurred
+   * @param _payload The request payload
+   * @throws JapiException                    If the method cannot be called
    */
   @Override
   public void handlePost(

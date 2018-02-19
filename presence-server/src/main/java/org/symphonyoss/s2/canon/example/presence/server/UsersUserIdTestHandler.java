@@ -43,12 +43,11 @@ public class UsersUserIdTestHandler extends UsersUserIdTestPathHandler
 {
   /**
    * get /users/{userId}/test
+   * No summary given.
    * Fetch a single user's presence.
-   * 
-   * userId                    A Symphony external user ID.
+   * @param userId                    No summary given.
    * @return A UserPresence
-   * @throws PermissionDeniedException        If the caller lacks necessary entitlements for the action
-   * @throws ServerErrorException             If an unexpected error occurred
+   * @throws JapiException                    If the method cannot be called
    */
   @Override
   public @Nonnull UserPresence handleGet(
