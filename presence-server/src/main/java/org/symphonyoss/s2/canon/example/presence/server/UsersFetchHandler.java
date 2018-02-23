@@ -25,9 +25,9 @@ package org.symphonyoss.s2.canon.example.presence.server;
 
 import java.util.concurrent.ExecutorService;
 
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
+import org.symphonyoss.s2.canon.example.presence.canon.UserId;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersFetchAsyncPathHandler;
-import org.symphonyoss.s2.canon.example.presence.facade.UserId;
-import org.symphonyoss.s2.canon.example.presence.facade.UserPresence;
 import org.symphonyoss.s2.canon.runtime.IConsumer;
 import org.symphonyoss.s2.canon.runtime.exception.JapiException;
 
@@ -39,7 +39,7 @@ public class UsersFetchHandler extends UsersFetchAsyncPathHandler
   }
 
   @Override
-  public void handlePost(UserId _payload, IConsumer<UserPresence> _consumer) throws JapiException
+  public void handlePost(UserId _payload, IConsumer<IUserPresence> _consumer) throws JapiException
   {
     _consumer.consume(getModel().getUser(_payload));
   }

@@ -30,16 +30,16 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.symphonyoss.s2.common.exception.BadFormatException;
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresenceInfo;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceHttpModelClient;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceStatus;
+import org.symphonyoss.s2.canon.example.presence.canon.UserId;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUserIdPutHttpRequest;
 import org.symphonyoss.s2.canon.example.presence.facade.Presence;
-import org.symphonyoss.s2.canon.example.presence.facade.UserId;
-import org.symphonyoss.s2.canon.example.presence.facade.UserPresenceInfo;
 import org.symphonyoss.s2.canon.runtime.IModelRegistry;
 import org.symphonyoss.s2.canon.runtime.ModelRegistry;
 import org.symphonyoss.s2.canon.runtime.exception.BadRequestException;
+import org.symphonyoss.s2.common.exception.BadFormatException;
 
 public class PutUsers4
 {
@@ -51,7 +51,7 @@ public class PutUsers4
     IModelRegistry          registry = new ModelRegistry().register(model);
     PresenceHttpModelClient client  = new PresenceHttpModelClient(registry, "http://localhost:8080");
     
-    UserPresenceInfo japiPayload = model.getUserPresenceInfoFactory().newBuilder()
+    IUserPresenceInfo japiPayload = model.getUserPresenceInfoFactory().newBuilder()
         .withStatus(PresenceStatus.DoNotDisturb)
         .withText("I am on the phone")
         .build();

@@ -30,20 +30,19 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.symphonyoss.s2.common.exception.BadFormatException;
-
-import com.google.protobuf.ByteString;
-
+import org.symphonyoss.s2.canon.example.presence.canon.Cursor;
+import org.symphonyoss.s2.canon.example.presence.canon.CursorLimit;
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresencePage;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceHttpModelClient;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersGetHttpRequest;
-import org.symphonyoss.s2.canon.example.presence.facade.Cursor;
-import org.symphonyoss.s2.canon.example.presence.facade.CursorLimit;
 import org.symphonyoss.s2.canon.example.presence.facade.Presence;
-import org.symphonyoss.s2.canon.example.presence.facade.UserPresence;
-import org.symphonyoss.s2.canon.example.presence.facade.UserPresencePage;
 import org.symphonyoss.s2.canon.runtime.IModelRegistry;
 import org.symphonyoss.s2.canon.runtime.ModelRegistry;
 import org.symphonyoss.s2.canon.runtime.exception.BadRequestException;
+import org.symphonyoss.s2.common.exception.BadFormatException;
+
+import com.google.protobuf.ByteString;
 
 public class GetUsers
 {
@@ -65,9 +64,9 @@ public class GetUsers
             .setDefaultCookieStore(cookieStore)
             .build();
     try {
-      UserPresencePage result = request.execute(httpclient);
+      IUserPresencePage result = request.execute(httpclient);
     
-      for(UserPresence p : result.getData())
+      for(IUserPresence p : result.getData())
       {
         System.err.printf("%10d %-20s %s%n", p.getUserId().getValue(), p.getStatus(), p.getText());
       }

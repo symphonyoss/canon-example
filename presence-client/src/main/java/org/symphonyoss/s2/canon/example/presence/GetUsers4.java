@@ -30,15 +30,15 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.symphonyoss.s2.common.exception.BadFormatException;
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceHttpModelClient;
+import org.symphonyoss.s2.canon.example.presence.canon.UserId;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUserIdGetHttpRequest;
 import org.symphonyoss.s2.canon.example.presence.facade.Presence;
-import org.symphonyoss.s2.canon.example.presence.facade.UserId;
-import org.symphonyoss.s2.canon.example.presence.facade.UserPresence;
 import org.symphonyoss.s2.canon.runtime.IModelRegistry;
 import org.symphonyoss.s2.canon.runtime.ModelRegistry;
 import org.symphonyoss.s2.canon.runtime.exception.BadRequestException;
+import org.symphonyoss.s2.common.exception.BadFormatException;
 
 public class GetUsers4
 {
@@ -59,7 +59,7 @@ public class GetUsers4
             .setDefaultCookieStore(cookieStore)
             .build();
     try {
-      UserPresence p = request.execute(httpclient);
+      IUserPresence p = request.execute(httpclient);
     
        System.err.printf("%10d %-20s %s%n", p.getUserId().getValue(), p.getStatus(), p.getText());
     }

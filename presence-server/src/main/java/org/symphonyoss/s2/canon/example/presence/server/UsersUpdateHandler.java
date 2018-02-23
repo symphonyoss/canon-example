@@ -27,9 +27,9 @@ import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresenceList;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUpdatePathHandler;
-import org.symphonyoss.s2.canon.example.presence.facade.UserPresence;
-import org.symphonyoss.s2.canon.example.presence.facade.UserPresenceList;
 import org.symphonyoss.s2.canon.runtime.exception.JapiException;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
 import org.symphonyoss.s2.common.exception.BadFormatException;
@@ -56,12 +56,12 @@ public class UsersUpdateHandler extends UsersUpdatePathHandler
    */
   @Override
   public void handlePost(
-    @Nonnull  UserPresenceList          _payload
+    @Nonnull  IUserPresenceList          _payload
 
   )
   throws JapiException
   	{
-  	  for(UserPresence userPresence : _payload.getData())
+  	  for(IUserPresence userPresence : _payload.getData())
   	  {
   	    try
         {

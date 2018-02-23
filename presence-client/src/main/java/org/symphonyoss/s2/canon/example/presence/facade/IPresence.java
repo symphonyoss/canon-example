@@ -34,15 +34,18 @@ package org.symphonyoss.s2.canon.example.presence.facade;
 import java.util.Collection;
 
 import org.symphonyoss.s2.canon.example.presence.canon.IPresenceModel;
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresenceInfo;
+import org.symphonyoss.s2.canon.example.presence.canon.UserId;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
 
 public interface IPresence extends IPresenceModel
 {
 
-  Collection<UserPresence> getAllUsers();
+  Collection<IUserPresence> getAllUsers();
 
-  UserPresence getUser(UserId userId);
-  void setUser(UserId userId, UserPresenceInfo userPresenceInfo) throws ServerErrorException;
+  IUserPresence getUser(UserId userId);
+  void setUser(UserId userId, IUserPresenceInfo userPresenceInfo) throws ServerErrorException;
 }
 /*----------------------------------------------------------------------------------------------------
  * End of template proforma/java/Model/I_.java.ftl

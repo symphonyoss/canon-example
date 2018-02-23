@@ -28,12 +28,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import org.symphonyoss.s2.canon.example.presence.canon.Cursor;
+import org.symphonyoss.s2.canon.example.presence.canon.CursorLimit;
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresencePage;
+import org.symphonyoss.s2.canon.example.presence.canon.UserPresencePage.Builder;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersPathHandler;
-import org.symphonyoss.s2.canon.example.presence.facade.Cursor;
-import org.symphonyoss.s2.canon.example.presence.facade.CursorLimit;
-import org.symphonyoss.s2.canon.example.presence.facade.UserPresence;
-import org.symphonyoss.s2.canon.example.presence.facade.UserPresencePage;
-import org.symphonyoss.s2.canon.example.presence.facade.UserPresencePage.Factory.Builder;
 import org.symphonyoss.s2.canon.runtime.exception.JapiException;
 
 /**
@@ -57,7 +57,7 @@ public class UsersHandler extends UsersPathHandler
    * @throws JapiException                    If the method cannot be called
    */
   @Override
-  public @Nonnull UserPresencePage handleGet(
+  public @Nonnull IUserPresencePage handleGet(
     @Nullable Cursor                    cursor,
     @Nullable CursorLimit               limit
   )
@@ -65,7 +65,7 @@ public class UsersHandler extends UsersPathHandler
   	{
     Builder builder = getModel().getUserPresencePageFactory().newBuilder();
     
-    builder.withData(new ArrayList<UserPresence>(getModel().getAllUsers()));
+    builder.withData(new ArrayList<IUserPresence>(getModel().getAllUsers()));
     
     return builder.build();
 	}

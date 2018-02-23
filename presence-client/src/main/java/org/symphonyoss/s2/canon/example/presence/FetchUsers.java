@@ -31,15 +31,15 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.symphonyoss.s2.common.exception.BadFormatException;
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceHttpModelClient;
+import org.symphonyoss.s2.canon.example.presence.canon.UserId;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersFetchPostHttpRequest;
 import org.symphonyoss.s2.canon.example.presence.facade.Presence;
-import org.symphonyoss.s2.canon.example.presence.facade.UserId;
-import org.symphonyoss.s2.canon.example.presence.facade.UserPresence;
 import org.symphonyoss.s2.canon.runtime.IModelRegistry;
 import org.symphonyoss.s2.canon.runtime.ModelRegistry;
 import org.symphonyoss.s2.canon.runtime.exception.BadRequestException;
+import org.symphonyoss.s2.common.exception.BadFormatException;
 
 public class FetchUsers
 {
@@ -63,9 +63,9 @@ public class FetchUsers
             .setDefaultCookieStore(cookieStore)
             .build();
     try {
-      List<UserPresence> result = request.execute(httpclient);
+      List<IUserPresence> result = request.execute(httpclient);
     
-      for(UserPresence p : result)
+      for(IUserPresence p : result)
       {
         System.err.printf("%10d %-20s %s%n", p.getUserId().getValue(), p.getStatus(), p.getText());
       }

@@ -34,9 +34,12 @@ package org.symphonyoss.s2.canon.example.presence.facade;
 import java.util.Collection;
 import java.util.TreeMap;
 
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresenceInfo;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceModel;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceStatus;
-import org.symphonyoss.s2.canon.example.presence.facade.UserPresence.Factory.Builder;
+import org.symphonyoss.s2.canon.example.presence.canon.UserId;
+import org.symphonyoss.s2.canon.example.presence.canon.UserPresence.Builder;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
 import org.symphonyoss.s2.common.exception.BadFormatException;
 import org.symphonyoss.s2.common.fault.ProgramFault;
@@ -44,7 +47,7 @@ import org.symphonyoss.s2.fugue.di.ComponentDescriptor;
 
 public class Presence extends PresenceModel implements IPresence
 {
-  private TreeMap<UserId, UserPresence> presenceMap_ = new TreeMap<>();
+  private TreeMap<UserId, IUserPresence> presenceMap_ = new TreeMap<>();
   
   @Override
   public ComponentDescriptor getComponentDescriptor()
@@ -54,19 +57,19 @@ public class Presence extends PresenceModel implements IPresence
   }
 
   @Override
-  public synchronized Collection<UserPresence> getAllUsers()
+  public synchronized Collection<IUserPresence> getAllUsers()
   {
     return presenceMap_.values();
   }
   
   @Override
-  public synchronized UserPresence getUser(UserId userId)
+  public synchronized IUserPresence getUser(UserId userId)
   {
     return presenceMap_.get(userId);
   }
   
   @Override
-  public synchronized void setUser(UserId userId, UserPresenceInfo userPresenceInfo) throws ServerErrorException
+  public synchronized void setUser(UserId userId, IUserPresenceInfo userPresenceInfo) throws ServerErrorException
   {
     try
     {

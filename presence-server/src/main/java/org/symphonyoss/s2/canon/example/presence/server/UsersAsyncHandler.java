@@ -27,12 +27,12 @@ import java.util.concurrent.ExecutorService;
 
 import javax.annotation.concurrent.Immutable;
 
+import org.symphonyoss.s2.canon.example.presence.canon.Cursor;
+import org.symphonyoss.s2.canon.example.presence.canon.CursorLimit;
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresencePage;
+import org.symphonyoss.s2.canon.example.presence.canon.UserPresencePage.Builder;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersAsyncPathHandler;
-import org.symphonyoss.s2.canon.example.presence.facade.Cursor;
-import org.symphonyoss.s2.canon.example.presence.facade.CursorLimit;
-import org.symphonyoss.s2.canon.example.presence.facade.UserPresence;
-import org.symphonyoss.s2.canon.example.presence.facade.UserPresencePage;
-import org.symphonyoss.s2.canon.example.presence.facade.UserPresencePage.Factory.Builder;
 import org.symphonyoss.s2.canon.runtime.IConsumer;
 import org.symphonyoss.s2.canon.runtime.exception.JapiException;
 
@@ -53,11 +53,11 @@ public class UsersAsyncHandler extends UsersAsyncPathHandler
   }
 
   @Override
-  public void handleGet(IConsumer<UserPresencePage> _consumer, Cursor cursor, CursorLimit limit) throws JapiException
+  public void handleGet(IConsumer<IUserPresencePage> _consumer, Cursor cursor, CursorLimit limit) throws JapiException
   {
     Builder builder = getModel().getUserPresencePageFactory().newBuilder();
     
-    builder.withData(new ArrayList<UserPresence>(getModel().getAllUsers()));
+    builder.withData(new ArrayList<IUserPresence>(getModel().getAllUsers()));
     
     _consumer.consume(builder.build());
     _consumer.close();

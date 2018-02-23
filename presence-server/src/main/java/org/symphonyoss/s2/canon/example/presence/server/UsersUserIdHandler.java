@@ -26,10 +26,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresenceInfo;
+import org.symphonyoss.s2.canon.example.presence.canon.UserId;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUserIdPathHandler;
-import org.symphonyoss.s2.canon.example.presence.facade.UserId;
-import org.symphonyoss.s2.canon.example.presence.facade.UserPresence;
-import org.symphonyoss.s2.canon.example.presence.facade.UserPresenceInfo;
 import org.symphonyoss.s2.canon.runtime.exception.JapiException;
 
 /**
@@ -53,12 +53,10 @@ public class UsersUserIdHandler extends UsersUserIdPathHandler
    * @throws JapiException                    If the method cannot be called
    */
   @Override
-  public @Nullable  UserPresence handleGet(
-    @Nonnull  UserId                    userId
-  )
+  public @Nullable IUserPresence handleGet(@Nonnull UserId userId)
   throws JapiException
   	{
-  	  UserPresence result = getModel().getUser(userId);
+  	  IUserPresence result = getModel().getUser(userId);
   	  
     return result;
 	}
@@ -72,10 +70,7 @@ public class UsersUserIdHandler extends UsersUserIdPathHandler
    * @throws JapiException                    If the method cannot be called
    */
   @Override
-  public void handlePut(
-    @Nonnull  UserPresenceInfo          _payload,
-    @Nonnull  UserId                    userId
-  )
+  public void handlePut(@Nonnull IUserPresenceInfo _payload, @Nonnull UserId userId)
   throws JapiException
   	{
   	   getModel().setUser(userId, _payload);

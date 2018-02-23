@@ -49,7 +49,7 @@ public class PresenceServer extends FugueServer
     diContext.register(new Slf4jLogComponent())
       .register(model_)
       .register(new PresenceModelServlet())
-      //.register(new UsersHandler())
+      .register(new UsersFetchHandler(executor_, executor_))
       .register(new UsersAsyncHandler(executor_, executor_))
       .register(new UsersUserIdHandler())
       .register(new UsersUserIdTestHandler())
