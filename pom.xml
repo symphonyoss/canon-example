@@ -23,7 +23,7 @@
 
 	<groupId>org.symphonyoss.s2.canon.example</groupId>
 	<artifactId>canon-example</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<description>JSON API Generation Tooling Example Application</description>
 	<url>https://github.com/symphonyoss/canon-example</url>
 	<packaging>pom</packaging>
