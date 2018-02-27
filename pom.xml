@@ -25,7 +25,7 @@
 	<artifactId>canon-example</artifactId>
 	<version>0.0.1</version>
 	<description>JSON API Generation Tooling Example Application</description>
-	<url>https://github.com/SymphonyOSF/canon-example</url>
+	<url>https://github.com/symphonyoss/canon-example</url>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -41,9 +41,9 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:git:git://github.com/SymphonyOSF/canon-example.git</connection>
-		<developerConnection>scm:git:git@github.com:SymphonyOSF/canon-example.git</developerConnection>
-		<url>https://github.com/SymphonyOSF/canon-example</url>
+		<connection>scm:git:git://github.com/symphonyoss/canon-example.git</connection>
+		<developerConnection>scm:git:git@github.com:symphonyoss/canon-example.git</developerConnection>
+		<url>https://github.com/symphonyoss/canon-example</url>
 		<tag>canon-example-0.0.1</tag>
 	</scm>
 
