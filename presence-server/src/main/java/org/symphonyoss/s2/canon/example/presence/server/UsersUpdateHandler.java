@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresenceList;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUpdatePathHandler;
-import org.symphonyoss.s2.canon.runtime.exception.JapiException;
+import org.symphonyoss.s2.canon.runtime.exception.CanonException;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
 import org.symphonyoss.s2.common.exception.BadFormatException;
 
@@ -52,14 +52,14 @@ public class UsersUpdateHandler extends UsersUpdatePathHandler
    * No summary given.
    * 
    * @param _payload The request payload
-   * @throws JapiException                    If the method cannot be called
+   * @throws CanonException                    If the method cannot be called
    */
   @Override
   public void handlePost(
     @Nonnull  IUserPresenceList          _payload
 
   )
-  throws JapiException
+  throws CanonException
   	{
   	  for(IUserPresence userPresence : _payload.getData())
   	  {

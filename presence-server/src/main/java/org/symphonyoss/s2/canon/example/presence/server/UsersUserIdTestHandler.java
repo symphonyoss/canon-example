@@ -28,7 +28,7 @@ import javax.annotation.concurrent.Immutable;
 import org.symphonyoss.s2.canon.example.presence.canon.UserId;
 import org.symphonyoss.s2.canon.example.presence.canon.UserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUserIdTestPathHandler;
-import org.symphonyoss.s2.canon.runtime.exception.JapiException;
+import org.symphonyoss.s2.canon.runtime.exception.CanonException;
 
 /**
  * Facade for Path name=UsersUserIdTest
@@ -47,13 +47,13 @@ public class UsersUserIdTestHandler extends UsersUserIdTestPathHandler
    * Fetch a single user's presence.
    * @param userId                    No summary given.
    * @return A UserPresence
-   * @throws JapiException                    If the method cannot be called
+   * @throws CanonException                    If the method cannot be called
    */
   @Override
   public @Nonnull UserPresence handleGet(
     @Nonnull  UserId                    userId
   )
-  throws JapiException
+  throws CanonException
   	{
   	   // TODO Auto-generated method stub
     return null;

@@ -29,7 +29,7 @@ import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.UserId;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersFetchAsyncPathHandler;
 import org.symphonyoss.s2.canon.runtime.IConsumer;
-import org.symphonyoss.s2.canon.runtime.exception.JapiException;
+import org.symphonyoss.s2.canon.runtime.exception.CanonException;
 
 public class UsersFetchHandler extends UsersFetchAsyncPathHandler
 {
@@ -39,7 +39,7 @@ public class UsersFetchHandler extends UsersFetchAsyncPathHandler
   }
 
   @Override
-  public void handlePost(UserId _payload, IConsumer<IUserPresence> _consumer) throws JapiException
+  public void handlePost(UserId _payload, IConsumer<IUserPresence> _consumer) throws CanonException
   {
     _consumer.consume(getModel().getUser(_payload));
   }

@@ -34,7 +34,7 @@ import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresencePage;
 import org.symphonyoss.s2.canon.example.presence.canon.UserPresencePage.Builder;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersPathHandler;
-import org.symphonyoss.s2.canon.runtime.exception.JapiException;
+import org.symphonyoss.s2.canon.runtime.exception.CanonException;
 
 /**
  * Facade for Path name=Users
@@ -54,14 +54,14 @@ public class UsersHandler extends UsersPathHandler
    * @param cursor                    No summary given.
    * @param limit                     No summary given.
    * @return A UserPresencePage
-   * @throws JapiException                    If the method cannot be called
+   * @throws CanonException                    If the method cannot be called
    */
   @Override
   public @Nonnull IUserPresencePage handleGet(
     @Nullable Cursor                    cursor,
     @Nullable CursorLimit               limit
   )
-  throws JapiException
+  throws CanonException
   	{
     Builder builder = getModel().getUserPresencePageFactory().newBuilder();
     
@@ -71,7 +71,7 @@ public class UsersHandler extends UsersPathHandler
 	}
 
   @Override
-  public void handlePut(Cursor cursor, CursorLimit limit) throws JapiException
+  public void handlePut(Cursor cursor, CursorLimit limit) throws CanonException
   {
     // TODO Auto-generated method stub
     

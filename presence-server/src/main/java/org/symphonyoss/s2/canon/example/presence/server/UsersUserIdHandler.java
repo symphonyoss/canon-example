@@ -30,7 +30,7 @@ import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresenceInfo;
 import org.symphonyoss.s2.canon.example.presence.canon.UserId;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUserIdPathHandler;
-import org.symphonyoss.s2.canon.runtime.exception.JapiException;
+import org.symphonyoss.s2.canon.runtime.exception.CanonException;
 
 /**
  * Facade for Path name=UsersUserId
@@ -50,11 +50,11 @@ public class UsersUserIdHandler extends UsersUserIdPathHandler
    * @param userId                    No summary given.
    * @return A UserPresence
    * or <code>null</code>
-   * @throws JapiException                    If the method cannot be called
+   * @throws CanonException                    If the method cannot be called
    */
   @Override
   public @Nullable IUserPresence handleGet(@Nonnull UserId userId)
-  throws JapiException
+  throws CanonException
   	{
   	  IUserPresence result = getModel().getUser(userId);
   	  
@@ -67,11 +67,11 @@ public class UsersUserIdHandler extends UsersUserIdPathHandler
    * Set a single user's presence.
    * @param _payload The request payload
    * @param userId                    No summary given.
-   * @throws JapiException                    If the method cannot be called
+   * @throws CanonException                    If the method cannot be called
    */
   @Override
   public void handlePut(@Nonnull IUserPresenceInfo _payload, @Nonnull UserId userId)
-  throws JapiException
+  throws CanonException
   	{
   	   getModel().setUser(userId, _payload);
 	}
