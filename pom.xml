@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<!-- ~ ~ Copyright 2018 Symphony Communication Services, LLC. ~ ~ Licensed 
 		to The Symphony Software Foundation (SSF) under one ~ or more contributor 
 		license agreements. See the NOTICE file ~ distributed with this work for 
@@ -23,9 +24,9 @@
 
 	<groupId>org.symphonyoss.s2.canon.example</groupId>
 	<artifactId>canon-example</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<description>JSON API Generation Tooling Example Application</description>
-	<url>https://github.com/symphonyoss/canon-example</url>
+	<url>https://github.com/SymphonyOSF/canon-example</url>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -41,10 +42,10 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:git:git://github.com/symphonyoss/canon-example.git</connection>
-		<developerConnection>scm:git:git@github.com:symphonyoss/canon-example.git</developerConnection>
-		<url>https://github.com/symphonyoss/canon-example</url>
-		<tag>canon-example-0.0.1</tag>
+		<connection>scm:git:git://github.com/SymphonyOSF/canon-example.git</connection>
+		<developerConnection>scm:git:git@github.com:SymphonyOSF/canon-example.git</developerConnection>
+		<url>https://github.com/SymphonyOSF/canon-example</url>
+		<tag>HEAD</tag>
 	</scm>
 
 	<developers>
@@ -197,7 +198,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore />
+										<ignore></ignore>
 									</action>
 								</pluginExecution>
 							</pluginExecutions>
