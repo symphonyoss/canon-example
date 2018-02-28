@@ -32,7 +32,7 @@ import org.symphonyoss.s2.canon.example.presence.canon.IUserPresenceList;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUpdatePathHandler;
 import org.symphonyoss.s2.canon.runtime.exception.CanonException;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
-import org.symphonyoss.s2.common.exception.BadFormatException;
+import org.symphonyoss.s2.common.exception.InvalidValueException;
 
 /**
  * Facade for Path name=UsersUpdate
@@ -72,7 +72,7 @@ public class UsersUpdateHandler extends UsersUpdatePathHandler
                 .build()
               );
         }
-        catch (BadFormatException e)
+        catch (InvalidValueException e)
         {
           log_.error("Failed to update users", e);
           throw new ServerErrorException(e);

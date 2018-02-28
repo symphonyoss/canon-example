@@ -39,13 +39,13 @@ import org.symphonyoss.s2.canon.example.presence.facade.Presence;
 import org.symphonyoss.s2.canon.runtime.IModelRegistry;
 import org.symphonyoss.s2.canon.runtime.ModelRegistry;
 import org.symphonyoss.s2.canon.runtime.exception.BadRequestException;
-import org.symphonyoss.s2.common.exception.BadFormatException;
+import org.symphonyoss.s2.common.exception.InvalidValueException;
 
 public class PutUsers4
 {
   private static final Logger log_ = LoggerFactory.getLogger(PutUsers4.class);
   
-  public static void main(String[] argv) throws BadFormatException, BadRequestException, IOException
+  public static void main(String[] argv) throws InvalidValueException, BadRequestException, IOException
   {
     Presence                model   = new Presence();
     IModelRegistry          registry = new ModelRegistry().register(model);

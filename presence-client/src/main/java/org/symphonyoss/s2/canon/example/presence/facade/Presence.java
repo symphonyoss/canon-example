@@ -39,9 +39,9 @@ import org.symphonyoss.s2.canon.example.presence.canon.IUserPresenceInfo;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceModel;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceStatus;
 import org.symphonyoss.s2.canon.example.presence.canon.UserId;
-import org.symphonyoss.s2.canon.example.presence.canon.UserPresence.Builder;
+import org.symphonyoss.s2.canon.example.presence.canon.UserPresenceEntity.Builder;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
-import org.symphonyoss.s2.common.exception.BadFormatException;
+import org.symphonyoss.s2.common.exception.InvalidValueException;
 import org.symphonyoss.s2.common.fault.ProgramFault;
 import org.symphonyoss.s2.fugue.di.ComponentDescriptor;
 
@@ -79,7 +79,7 @@ public class Presence extends PresenceModel implements IPresence
         .withText(userPresenceInfo.getText())
         .build());
     }
-    catch(BadFormatException e)
+    catch(InvalidValueException e)
     {
       throw new ServerErrorException(e);
     }
@@ -119,7 +119,7 @@ public class Presence extends PresenceModel implements IPresence
       
       presenceMap_.put(userId, presenceBuilder.build());
     }
-    catch(BadFormatException e)
+    catch(InvalidValueException e)
     {
       throw new ProgramFault(e);
     }

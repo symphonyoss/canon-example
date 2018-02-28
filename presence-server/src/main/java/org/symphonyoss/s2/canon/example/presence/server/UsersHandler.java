@@ -32,9 +32,11 @@ import org.symphonyoss.s2.canon.example.presence.canon.Cursor;
 import org.symphonyoss.s2.canon.example.presence.canon.CursorLimit;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresencePage;
-import org.symphonyoss.s2.canon.example.presence.canon.UserPresencePage.Builder;
+import org.symphonyoss.s2.canon.example.presence.canon.UserPresencePageEntity.Builder;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersPathHandler;
 import org.symphonyoss.s2.canon.runtime.exception.CanonException;
+import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
+import org.symphonyoss.s2.common.exception.InvalidValueException;
 
 /**
  * Facade for Path name=Users
@@ -63,11 +65,18 @@ public class UsersHandler extends UsersPathHandler
   )
   throws CanonException
   	{
-    Builder builder = getModel().getUserPresencePageFactory().newBuilder();
-    
-    builder.withData(new ArrayList<IUserPresence>(getModel().getAllUsers()));
-    
-    return builder.build();
+    try
+    {
+      Builder builder = getModel().getUserPresencePageFactory().newBuilder();
+      
+      builder.withData(new ArrayList<IUserPresence>(getModel().getAllUsers()));
+      
+      return builder.build();
+    }
+    catch(InvalidValueException e)
+    {
+      throw new ServerErrorException(e);
+    }
 	}
 
   @Override
