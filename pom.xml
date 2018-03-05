@@ -65,14 +65,14 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<s2.common.version>0.1.13</s2.common.version>
+		<s2.common.version>0.1.14</s2.common.version>
 
-		<canon.version>0.0.6</canon.version>
+		<canon.version>0.0.8</canon.version>
 		<canon.template.groupid>org.symphonyoss.s2.canon</canon.template.groupid>
 		<canon.template.java>canon-template-java</canon.template.java>
 		<canon.template.version>${canon.version}</canon.template.version>
 		
-		<fugue.version>0.0.3</fugue.version>
+		<fugue.version>0.0.4</fugue.version>
     <gcp.project>sym-dev-arch</gcp.project>
 	</properties>
 
