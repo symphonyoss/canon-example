@@ -24,17 +24,20 @@
  *           artifactId canon-template-java
  *		Template name		   proforma/java/Model/I_ModelEntityFactory.java.ftl
  *		Template version	   1.0
- *  At                  2018-02-23 13:51:47 GMT
+ *  At                  2018-03-13 10:44:39 GMT
  *----------------------------------------------------------------------------------------------------
  */
 
 package org.symphonyoss.s2.canon.example.presence.facade;
 
 
+import org.symphonyoss.s2.canon.runtime.EntityBuilder;
 import org.symphonyoss.s2.canon.runtime.IEntityFactory;
 
-public interface IPresenceModelEntityFactory<E extends IPresenceModelEntity, B extends IPresenceModelEntity> extends IEntityFactory<E, B, IPresence>
+public interface IPresenceModelEntityFactory<E extends IPresenceModelEntity, S extends IPresenceModelEntity, B extends EntityBuilder>
+  extends IEntityFactory<E, S, B>
 {
+  public IPresence  getPresenceModel();
 }
 /*----------------------------------------------------------------------------------------------------
  * End of template proforma/java/Model/I_ModelEntityFactory.java.ftl
