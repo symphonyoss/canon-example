@@ -51,10 +51,6 @@
         <groupId>org.symphonyoss.s2.fugue</groupId>
         <artifactId>fugue-core</artifactId>
       </dependency>
-      <dependency>
-        <groupId>org.symphonyoss.s2.fugue</groupId>
-        <artifactId>fugue-di</artifactId>
-      </dependency>
     
     <dependency>
       <groupId>org.symphonyoss.s2.common</groupId>
