@@ -28,6 +28,7 @@ import javax.annotation.concurrent.Immutable;
 import org.symphonyoss.s2.canon.example.presence.canon.UserId;
 import org.symphonyoss.s2.canon.example.presence.canon.UserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUserIdTestPathHandler;
+import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.runtime.exception.CanonException;
 
 /**
@@ -41,6 +42,11 @@ import org.symphonyoss.s2.canon.runtime.exception.CanonException;
 @Immutable
 public class UsersUserIdTestHandler extends UsersUserIdTestPathHandler
 {
+  public UsersUserIdTestHandler(IPresence model)
+  {
+    super(model);
+  }
+
   /**
    * get /users/{userId}/test
    * No summary given.

@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresenceList;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUpdatePathHandler;
+import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.runtime.exception.CanonException;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
 import org.symphonyoss.s2.common.exception.InvalidValueException;
@@ -46,6 +47,11 @@ import org.symphonyoss.s2.common.exception.InvalidValueException;
 public class UsersUpdateHandler extends UsersUpdatePathHandler
 {
   private static final Logger log_ = LoggerFactory.getLogger(UsersUpdateHandler.class);
+
+  public UsersUpdateHandler(IPresence model)
+  {
+    super(model);
+  }
   
   /**
    * post /users/update

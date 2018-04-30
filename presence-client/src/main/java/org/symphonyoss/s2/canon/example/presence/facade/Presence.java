@@ -43,18 +43,11 @@ import org.symphonyoss.s2.canon.example.presence.canon.UserPresenceEntity.Builde
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
 import org.symphonyoss.s2.common.exception.InvalidValueException;
 import org.symphonyoss.s2.common.fault.ProgramFault;
-import org.symphonyoss.s2.fugue.di.ComponentDescriptor;
+import org.symphonyoss.s2.fugue.IFugueComponent;
 
-public class Presence extends PresenceModel implements IPresence
+public class Presence extends PresenceModel implements IPresence, IFugueComponent
 {
   private TreeMap<UserId, IUserPresence> presenceMap_ = new TreeMap<>();
-  
-  @Override
-  public ComponentDescriptor getComponentDescriptor()
-  {
-    return super.getComponentDescriptor()
-        .addStart(() -> initialize());
-  }
 
   @Override
   public synchronized Collection<IUserPresence> getAllUsers()
@@ -85,7 +78,8 @@ public class Presence extends PresenceModel implements IPresence
     }
   }
   
-  private void initialize()
+  @Override
+  public void start()
   {
     /* Load presence data for known users */
     
@@ -123,6 +117,11 @@ public class Presence extends PresenceModel implements IPresence
     {
       throw new ProgramFault(e);
     }
+  }
+
+  @Override
+  public void stop()
+  {
   }
 }
 /*----------------------------------------------------------------------------------------------------

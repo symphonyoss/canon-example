@@ -38,16 +38,18 @@ import org.symphonyoss.s2.canon.example.presence.facade.Presence;
 import org.symphonyoss.s2.canon.runtime.IModelRegistry;
 import org.symphonyoss.s2.canon.runtime.ModelRegistry;
 import org.symphonyoss.s2.canon.runtime.exception.BadRequestException;
+import org.symphonyoss.s2.canon.runtime.exception.PermissionDeniedException;
+import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
 import org.symphonyoss.s2.common.exception.InvalidValueException;
 
 public class GetUsers4
 {
   private static final Logger log_ = LoggerFactory.getLogger(GetUsers4.class);
   
-  public static void main(String[] argv) throws InvalidValueException, BadRequestException, IOException
+  public static void main(String[] argv) throws InvalidValueException, BadRequestException, IOException, PermissionDeniedException, ServerErrorException
   {
     Presence                model   = new Presence();
-    IModelRegistry          registry = new ModelRegistry().register(model);
+    IModelRegistry          registry = new ModelRegistry(model);
     PresenceHttpModelClient client  = new PresenceHttpModelClient(registry, "http://localhost:8080");
     
     UsersUserIdGetHttpRequest request = client.newUsersUserIdGetHttpRequestBuilder()

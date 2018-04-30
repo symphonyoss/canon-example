@@ -39,23 +39,25 @@ import org.symphonyoss.s2.canon.example.presence.facade.Presence;
 import org.symphonyoss.s2.canon.runtime.IModelRegistry;
 import org.symphonyoss.s2.canon.runtime.ModelRegistry;
 import org.symphonyoss.s2.canon.runtime.exception.BadRequestException;
+import org.symphonyoss.s2.canon.runtime.exception.PermissionDeniedException;
+import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
 import org.symphonyoss.s2.common.exception.InvalidValueException;
 
 public class FetchUsers
 {
   private static final Logger log_ = LoggerFactory.getLogger(FetchUsers.class);
   
-  public static void main(String[] argv) throws InvalidValueException, BadRequestException, IOException
+  public static void main(String[] argv) throws InvalidValueException, BadRequestException, IOException, PermissionDeniedException, ServerErrorException
   {
     Presence                model   = new Presence();
-    IModelRegistry          registry = new ModelRegistry().register(model);
+    IModelRegistry          registry = new ModelRegistry(model);
     PresenceHttpModelClient client  = new PresenceHttpModelClient(registry, "http://localhost:8080");
     
     
     UsersFetchPostHttpRequest request = client.newUsersFetchPostHttpRequestBuilder()
-        .withJapiPayload(UserId.newBuilder().build(1L))
-        .withJapiPayload(UserId.newBuilder().build(2L))
-        .withJapiPayload(UserId.newBuilder().build(3L))
+        .withCanonPayload(UserId.newBuilder().build(1L))
+        .withCanonPayload(UserId.newBuilder().build(2L))
+        .withCanonPayload(UserId.newBuilder().build(3L))
       .build();
     
     BasicCookieStore cookieStore = new BasicCookieStore();

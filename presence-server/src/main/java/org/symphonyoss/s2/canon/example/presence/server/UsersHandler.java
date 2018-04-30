@@ -34,6 +34,7 @@ import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresencePage;
 import org.symphonyoss.s2.canon.example.presence.canon.UserPresencePageEntity.Builder;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersPathHandler;
+import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.runtime.exception.CanonException;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
 import org.symphonyoss.s2.common.exception.InvalidValueException;
@@ -49,6 +50,11 @@ import org.symphonyoss.s2.common.exception.InvalidValueException;
 @Immutable
 public class UsersHandler extends UsersPathHandler
 {
+  public UsersHandler(IPresence model)
+  {
+    super(model);
+  }
+
   /**
    * get /users
    * No summary given.
