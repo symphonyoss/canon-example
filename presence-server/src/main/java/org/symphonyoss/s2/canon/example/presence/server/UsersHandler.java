@@ -32,12 +32,14 @@ import org.symphonyoss.s2.canon.example.presence.canon.Cursor;
 import org.symphonyoss.s2.canon.example.presence.canon.CursorLimit;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresencePage;
+import org.symphonyoss.s2.canon.example.presence.canon.UserPresencePage;
 import org.symphonyoss.s2.canon.example.presence.canon.UserPresencePageEntity.Builder;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersPathHandler;
 import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.runtime.exception.CanonException;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
 import org.symphonyoss.s2.common.exception.InvalidValueException;
+import org.symphonyoss.s2.fugue.core.trace.ITraceContext;
 
 /**
  * Facade for Path name=Users
@@ -50,9 +52,11 @@ import org.symphonyoss.s2.common.exception.InvalidValueException;
 @Immutable
 public class UsersHandler extends UsersPathHandler
 {
-  public UsersHandler(IPresence model)
+  private IPresence presenceModel_;
+
+  public UsersHandler(IPresence presenceModel)
   {
-    super(model);
+    presenceModel_ = presenceModel;
   }
 
   /**
@@ -66,6 +70,7 @@ public class UsersHandler extends UsersPathHandler
    */
   @Override
   public @Nonnull IUserPresencePage handleGet(
+      ITraceContext                     traceContext,
     @Nullable Cursor                    cursor,
     @Nullable CursorLimit               limit
   )
@@ -73,9 +78,9 @@ public class UsersHandler extends UsersPathHandler
   	{
     try
     {
-      Builder builder = getModel().getUserPresencePageFactory().newBuilder();
+      Builder builder = UserPresencePage.FACTORY.newBuilder();
       
-      builder.withData(new ArrayList<IUserPresence>(getModel().getAllUsers()));
+      builder.withData(new ArrayList<IUserPresence>(presenceModel_.getAllUsers()));
       
       return builder.build();
     }
@@ -86,7 +91,8 @@ public class UsersHandler extends UsersPathHandler
 	}
 
   @Override
-  public void handlePut(Cursor cursor, CursorLimit limit) throws CanonException
+  public void handlePut(
+      ITraceContext traceContext,Cursor cursor, CursorLimit limit) throws CanonException
   {
     // TODO Auto-generated method stub
     

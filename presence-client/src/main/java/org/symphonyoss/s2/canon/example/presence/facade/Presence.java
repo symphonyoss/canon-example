@@ -36,16 +36,16 @@ import java.util.TreeMap;
 
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresenceInfo;
-import org.symphonyoss.s2.canon.example.presence.canon.PresenceModel;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceStatus;
 import org.symphonyoss.s2.canon.example.presence.canon.UserId;
+import org.symphonyoss.s2.canon.example.presence.canon.UserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.UserPresenceEntity.Builder;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
 import org.symphonyoss.s2.common.exception.InvalidValueException;
 import org.symphonyoss.s2.common.fault.ProgramFault;
 import org.symphonyoss.s2.fugue.IFugueComponent;
 
-public class Presence extends PresenceModel implements IPresence, IFugueComponent
+public class Presence implements IPresence, IFugueComponent
 {
   private TreeMap<UserId, IUserPresence> presenceMap_ = new TreeMap<>();
 
@@ -66,7 +66,7 @@ public class Presence extends PresenceModel implements IPresence, IFugueComponen
   {
     try
     {
-      presenceMap_.put(userId, getUserPresenceFactory().newBuilder()
+      presenceMap_.put(userId, UserPresence.FACTORY.newBuilder()
         .withUserId(userId)
         .withStatus(userPresenceInfo.getStatus())
         .withText(userPresenceInfo.getText())
@@ -85,7 +85,7 @@ public class Presence extends PresenceModel implements IPresence, IFugueComponen
     
     try
     {
-      Builder presenceBuilder = getUserPresenceFactory().newBuilder();
+      Builder presenceBuilder = UserPresence.FACTORY.newBuilder();
       UserId userId;
       
       userId = UserId.newBuilder().build((long) 1);

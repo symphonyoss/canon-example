@@ -31,6 +31,7 @@ import org.symphonyoss.s2.canon.example.presence.canon.Cursor;
 import org.symphonyoss.s2.canon.example.presence.canon.CursorLimit;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresencePage;
+import org.symphonyoss.s2.canon.example.presence.canon.UserPresencePage;
 import org.symphonyoss.s2.canon.example.presence.canon.UserPresencePageEntity.Builder;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersAsyncPathHandler;
 import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
@@ -51,9 +52,12 @@ import org.symphonyoss.s2.fugue.pipeline.IConsumer;
 @Immutable
 public class UsersAsyncHandler extends UsersAsyncPathHandler
 {
+  private IPresence presenceModel_;
+
   public UsersAsyncHandler(IPresence presenceModel, ExecutorService processExecutor, ExecutorService responseExecutor)
   {
-    super(presenceModel, processExecutor, responseExecutor);
+    super(processExecutor, responseExecutor);
+    presenceModel_ = presenceModel;
   }
 
   @Override
@@ -62,9 +66,9 @@ public class UsersAsyncHandler extends UsersAsyncPathHandler
   {
     try
     {
-      Builder builder = getModel().getUserPresencePageFactory().newBuilder();
+      Builder builder = UserPresencePage.FACTORY.newBuilder();
       
-      builder.withData(new ArrayList<IUserPresence>(getModel().getAllUsers()));
+      builder.withData(new ArrayList<IUserPresence>(presenceModel_.getAllUsers()));
       
       canonConsumer.consume(builder.build(), canonTrace);
       canonConsumer.close();

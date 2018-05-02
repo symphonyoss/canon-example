@@ -35,16 +35,20 @@ import org.symphonyoss.s2.fugue.pipeline.IConsumer;
 
 public class UsersFetchHandler extends UsersFetchAsyncPathHandler
 {
+  private IPresence presenceModel_;
+
   public UsersFetchHandler(IPresence presenceModel, ExecutorService processExecutor, ExecutorService responseExecutor)
   {
-    super(presenceModel, processExecutor, responseExecutor);
+    super(processExecutor, responseExecutor);
+    
+    presenceModel_ = presenceModel;
   }
 
   @Override
   public void handlePost(UserId canonPayload, IConsumer<IUserPresence> canonConsumer, ITraceContext canonTrace)
       throws CanonException
   {
-    canonConsumer.consume(getModel().getUser(canonPayload), canonTrace);
+    canonConsumer.consume(presenceModel_.getUser(canonPayload), canonTrace);
   }
 
 }

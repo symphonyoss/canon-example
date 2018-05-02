@@ -33,13 +33,12 @@ package org.symphonyoss.s2.canon.example.presence.facade;
 
 import java.util.Collection;
 
-import org.symphonyoss.s2.canon.example.presence.canon.IPresenceModel;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresenceInfo;
 import org.symphonyoss.s2.canon.example.presence.canon.UserId;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
 
-public interface IPresence extends IPresenceModel
+public interface IPresence 
 {
 
   Collection<IUserPresence> getAllUsers();

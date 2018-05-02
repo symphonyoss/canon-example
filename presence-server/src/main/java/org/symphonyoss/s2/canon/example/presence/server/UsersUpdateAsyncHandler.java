@@ -30,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresenceList;
+import org.symphonyoss.s2.canon.example.presence.canon.UserPresenceInfo;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUpdateAsyncPathHandler;
 import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.runtime.exception.CanonException;
@@ -50,9 +51,13 @@ public class UsersUpdateAsyncHandler extends UsersUpdateAsyncPathHandler
 {
   private static final Logger log_ = LoggerFactory.getLogger(UsersUpdateAsyncHandler.class);
   
+  private IPresence presenceModel_;
+  
   public UsersUpdateAsyncHandler(IPresence presenceModel, ExecutorService processExecutor, ExecutorService responseExecutor)
   {
-    super(presenceModel, processExecutor, responseExecutor);
+    super(processExecutor, responseExecutor);
+    
+    presenceModel_= presenceModel;
   }
   
   /**
@@ -70,8 +75,8 @@ public class UsersUpdateAsyncHandler extends UsersUpdateAsyncPathHandler
     {
       try
       {
-        getModel().setUser(userPresence.getUserId(),
-            getModel().getUserPresenceInfoFactory().newBuilder()
+        presenceModel_.setUser(userPresence.getUserId(),
+            UserPresenceInfo.FACTORY.newBuilder()
               .withStatus(userPresence.getStatus())
               .withText(userPresence.getText())
               .build()

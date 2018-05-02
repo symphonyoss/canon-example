@@ -32,10 +32,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresenceInfo;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceHttpModelClient;
+import org.symphonyoss.s2.canon.example.presence.canon.PresenceModel;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceStatus;
 import org.symphonyoss.s2.canon.example.presence.canon.UserId;
+import org.symphonyoss.s2.canon.example.presence.canon.UserPresenceInfo;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUserIdPutHttpRequest;
-import org.symphonyoss.s2.canon.example.presence.facade.Presence;
 import org.symphonyoss.s2.canon.runtime.IModelRegistry;
 import org.symphonyoss.s2.canon.runtime.ModelRegistry;
 import org.symphonyoss.s2.canon.runtime.exception.BadRequestException;
@@ -49,11 +50,10 @@ public class PutUsers4
   
   public static void main(String[] argv) throws InvalidValueException, BadRequestException, IOException, PermissionDeniedException, ServerErrorException
   {
-    Presence                model   = new Presence();
-    IModelRegistry          registry = new ModelRegistry(model);
+    IModelRegistry          registry = new ModelRegistry(PresenceModel.FACTORIES);
     PresenceHttpModelClient client  = new PresenceHttpModelClient(registry, "http://localhost:8080");
     
-    IUserPresenceInfo japiPayload = model.getUserPresenceInfoFactory().newBuilder()
+    IUserPresenceInfo japiPayload = UserPresenceInfo.FACTORY.newBuilder()
         .withStatus(PresenceStatus.DoNotDisturb)
         .withText("I am on the phone")
         .build();

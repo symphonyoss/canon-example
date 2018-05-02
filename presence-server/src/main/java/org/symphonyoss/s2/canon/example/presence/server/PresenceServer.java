@@ -48,7 +48,7 @@ public class PresenceServer extends FugueServer
     Presence model    = new Presence();
     ExecutorService  executor = Executors.newFixedThreadPool(50);
     
-    PresenceModelServlet servlet = new PresenceModelServlet(model, new LoggerTraceContextFactory(),
+    PresenceModelServlet servlet = new PresenceModelServlet(new LoggerTraceContextFactory(),
         new UsersUserIdHandler(model),
         new UsersUserIdTestHandler(model),
         new UsersAsyncHandler(model, executor, executor),
