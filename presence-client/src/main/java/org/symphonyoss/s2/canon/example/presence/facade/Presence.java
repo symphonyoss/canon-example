@@ -66,7 +66,7 @@ public class Presence implements IPresence, IFugueComponent
   {
     try
     {
-      presenceMap_.put(userId, UserPresence.FACTORY.newBuilder()
+      presenceMap_.put(userId, UserPresence.BUILDER.newInstance()
         .withUserId(userId)
         .withStatus(userPresenceInfo.getStatus())
         .withText(userPresenceInfo.getText())
@@ -85,7 +85,7 @@ public class Presence implements IPresence, IFugueComponent
     
     try
     {
-      Builder presenceBuilder = UserPresence.FACTORY.newBuilder();
+      Builder presenceBuilder = UserPresence.BUILDER.newInstance();
       UserId userId;
       
       userId = UserId.newBuilder().build((long) 1);

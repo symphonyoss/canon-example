@@ -33,7 +33,6 @@ import org.symphonyoss.s2.canon.example.presence.canon.CursorLimit;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresencePage;
 import org.symphonyoss.s2.canon.example.presence.canon.UserPresencePage;
-import org.symphonyoss.s2.canon.example.presence.canon.UserPresencePageEntity.Builder;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersPathHandler;
 import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.runtime.exception.CanonException;
@@ -78,7 +77,7 @@ public class UsersHandler extends UsersPathHandler
   	{
     try
     {
-      Builder builder = UserPresencePage.FACTORY.newBuilder();
+      UserPresencePage.Builder builder = UserPresencePage.BUILDER.newInstance();
       
       builder.withData(new ArrayList<IUserPresence>(presenceModel_.getAllUsers()));
       

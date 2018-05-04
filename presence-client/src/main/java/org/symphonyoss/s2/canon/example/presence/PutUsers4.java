@@ -50,10 +50,10 @@ public class PutUsers4
   
   public static void main(String[] argv) throws InvalidValueException, BadRequestException, IOException, PermissionDeniedException, ServerErrorException
   {
-    IModelRegistry          registry = new ModelRegistry(PresenceModel.FACTORIES);
+    IModelRegistry          registry = new ModelRegistry().withFactories(PresenceModel.FACTORIES);
     PresenceHttpModelClient client  = new PresenceHttpModelClient(registry, "http://localhost:8080");
     
-    IUserPresenceInfo japiPayload = UserPresenceInfo.FACTORY.newBuilder()
+    IUserPresenceInfo japiPayload = UserPresenceInfo.BUILDER.newInstance()
         .withStatus(PresenceStatus.DoNotDisturb)
         .withText("I am on the phone")
         .build();

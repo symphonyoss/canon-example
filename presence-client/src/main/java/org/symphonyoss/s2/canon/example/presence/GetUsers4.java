@@ -48,7 +48,7 @@ public class GetUsers4
   
   public static void main(String[] argv) throws InvalidValueException, BadRequestException, IOException, PermissionDeniedException, ServerErrorException
   {
-    IModelRegistry          registry = new ModelRegistry(PresenceModel.FACTORIES);
+    IModelRegistry          registry = new ModelRegistry().withFactories(PresenceModel.FACTORIES);
     PresenceHttpModelClient client  = new PresenceHttpModelClient(registry, "http://localhost:8080");
     
     UsersUserIdGetHttpRequest request = client.newUsersUserIdGetHttpRequestBuilder()

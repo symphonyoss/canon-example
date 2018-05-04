@@ -63,7 +63,7 @@ public class UsersUpdateHandler extends UsersUpdatePathHandler
   	    try
         {
   	      presenceModel_.setUser(userPresence.getUserId(),
-              UserPresenceInfo.FACTORY.newBuilder()
+              UserPresenceInfo.BUILDER.newInstance()
                 .withStatus(userPresence.getStatus())
                 .withText(userPresence.getText())
                 .build()
