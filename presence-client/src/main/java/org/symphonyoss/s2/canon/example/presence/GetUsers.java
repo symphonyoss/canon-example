@@ -39,24 +39,32 @@ import org.symphonyoss.s2.canon.example.presence.canon.PresenceModel;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersGetHttpRequest;
 import org.symphonyoss.s2.canon.runtime.IModelRegistry;
 import org.symphonyoss.s2.canon.runtime.ModelRegistry;
-import org.symphonyoss.s2.canon.runtime.exception.BadRequestException;
-import org.symphonyoss.s2.canon.runtime.exception.PermissionDeniedException;
-import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
-import org.symphonyoss.s2.common.exception.InvalidValueException;
+import org.symphonyoss.s2.common.immutable.ImmutableByteArray;
 
-import com.google.protobuf.ByteString;
-
+/**
+ * Fetch all users by calling the REST endpoint.
+ * 
+ * @author Bruce Skingle
+ *
+ */
 public class GetUsers
 {
   private static final Logger log_ = LoggerFactory.getLogger(GetUsers.class);
   
-  public static void main(String[] argv) throws InvalidValueException, BadRequestException, IOException, PermissionDeniedException, ServerErrorException
+  /**
+   * Main.
+   * 
+   * @param argv  Command line args - ignored.
+   * 
+   * @throws Exception   If something goes wrong. This is just an example.
+   */
+  public static void main(String[] argv) throws Exception
   {
     IModelRegistry          registry = new ModelRegistry().withFactories(PresenceModel.FACTORIES);
     PresenceHttpModelClient client  = new PresenceHttpModelClient(registry, "http://localhost:8080");
     
     UsersGetHttpRequest request = client.newUsersGetHttpRequestBuilder()
-      .withCursor(Cursor.newBuilder().build(ByteString.copyFrom("Hello".getBytes())))
+      .withCursor(Cursor.newBuilder().build(ImmutableByteArray.newInstance("Hello".getBytes())))
       .withLimit(CursorLimit.newBuilder().build(20))
       .build();
     

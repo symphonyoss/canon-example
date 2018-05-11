@@ -39,16 +39,25 @@ import org.symphonyoss.s2.canon.example.presence.canon.UserPresenceInfo;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUserIdPutHttpRequest;
 import org.symphonyoss.s2.canon.runtime.IModelRegistry;
 import org.symphonyoss.s2.canon.runtime.ModelRegistry;
-import org.symphonyoss.s2.canon.runtime.exception.BadRequestException;
-import org.symphonyoss.s2.canon.runtime.exception.PermissionDeniedException;
-import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
-import org.symphonyoss.s2.common.exception.InvalidValueException;
 
+/**
+ * Create user 4 from hard coded values using the REST endpoint.
+ * 
+ * @author Bruce Skingle
+ *
+ */
 public class PutUsers4
 {
   private static final Logger log_ = LoggerFactory.getLogger(PutUsers4.class);
   
-  public static void main(String[] argv) throws InvalidValueException, BadRequestException, IOException, PermissionDeniedException, ServerErrorException
+  /**
+   * Main.
+   * 
+   * @param argv  Command line args - ignored.
+   * 
+   * @throws Exception   If something goes wrong. This is just an example.
+   */
+  public static void main(String[] argv) throws Exception
   {
     IModelRegistry          registry = new ModelRegistry().withFactories(PresenceModel.FACTORIES);
     PresenceHttpModelClient client  = new PresenceHttpModelClient(registry, "http://localhost:8080");
