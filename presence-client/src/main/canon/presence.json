@@ -1,13 +1,13 @@
 {
 	"canon": "0.0.1",
 	"info": {
-		"version": "0.0.1",
 		"title": "Japigen Simple RPC Test Case",
 		"license": {
 			"name": "Apache2"
 		}
 	},
-	"id": "https://github.com/bruceskingle/canon/blob/master/canon-test/src/main/resources/test/presence.json",
+	"id": "org.symphonyoss.s2.canon.example.presence",
+  "version": "0.1",
   "basePath": "/presence/v2",
   "model": {
 		"javaGenPackage": "org.symphonyoss.s2.canon.example.presence.canon",
