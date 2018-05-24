@@ -24,17 +24,19 @@ package org.symphonyoss.s2.canon.example.presence.server;
 
 import java.util.concurrent.ExecutorService;
 
-import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresenceList;
+import org.symphonyoss.s2.canon.example.presence.canon.UserPresenceInfo;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUpdateAsyncPathHandler;
+import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.runtime.exception.CanonException;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
 import org.symphonyoss.s2.common.exception.InvalidValueException;
+import org.symphonyoss.s2.fugue.core.trace.ITraceContext;
 
 /**
  * Facade for Path name=UsersUpdate
@@ -49,31 +51,34 @@ public class UsersUpdateAsyncHandler extends UsersUpdateAsyncPathHandler
 {
   private static final Logger log_ = LoggerFactory.getLogger(UsersUpdateAsyncHandler.class);
   
-  public UsersUpdateAsyncHandler(ExecutorService processExecutor, ExecutorService responseExecutor)
+  private IPresence presenceModel_;
+  
+  public UsersUpdateAsyncHandler(IPresence presenceModel, ExecutorService processExecutor, ExecutorService responseExecutor)
   {
     super(processExecutor, responseExecutor);
+    
+    presenceModel_= presenceModel;
   }
   
   /**
    * post /users/update
    * No summary given.
    * 
-   * @param _payload The request payload
+   * @param canonPayload The request payload.
+   * @param canonTrace   A trace context.
+   * 
    * @throws CanonException                    If the method cannot be called
    */
-  @Override
-  public void handlePost(
-    @Nonnull  IUserPresenceList          _payload
 
-  )
-  throws CanonException
-  	{
-  	  for(IUserPresence userPresence : _payload.getData())
-  	  {
-  	    try
+  @Override
+  public void handlePost(IUserPresenceList canonPayload, ITraceContext canonTrace) throws CanonException
+  {
+    for(IUserPresence userPresence : canonPayload.getData())
+    {
+      try
       {
-        getModel().setUser(userPresence.getUserId(),
-            getModel().getUserPresenceInfoFactory().newBuilder()
+        presenceModel_.setUser(userPresence.getUserId(),
+            UserPresenceInfo.BUILDER.newInstance()
               .withStatus(userPresence.getStatus())
               .withText(userPresence.getText())
               .build()
@@ -84,9 +89,9 @@ public class UsersUpdateAsyncHandler extends UsersUpdateAsyncPathHandler
         log_.error("Failed to update users", e);
         throw new ServerErrorException(e);
       }
-  	    
-  	    throw new ServerErrorException("BROKEN FOR TEST");
-  	  }
-	}
+      
+      throw new ServerErrorException("BROKEN FOR TEST");
+    }
+  }
 
 }

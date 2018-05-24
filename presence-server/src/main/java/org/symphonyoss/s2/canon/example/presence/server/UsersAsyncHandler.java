@@ -31,12 +31,14 @@ import org.symphonyoss.s2.canon.example.presence.canon.Cursor;
 import org.symphonyoss.s2.canon.example.presence.canon.CursorLimit;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresencePage;
-import org.symphonyoss.s2.canon.example.presence.canon.UserPresencePageEntity.Builder;
+import org.symphonyoss.s2.canon.example.presence.canon.UserPresencePage;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersAsyncPathHandler;
-import org.symphonyoss.s2.canon.runtime.IConsumer;
+import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.runtime.exception.CanonException;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
 import org.symphonyoss.s2.common.exception.InvalidValueException;
+import org.symphonyoss.s2.fugue.core.trace.ITraceContext;
+import org.symphonyoss.s2.fugue.pipeline.IConsumer;
 
 /**
  * Facade for Path name=Users
@@ -49,22 +51,26 @@ import org.symphonyoss.s2.common.exception.InvalidValueException;
 @Immutable
 public class UsersAsyncHandler extends UsersAsyncPathHandler
 {
-  public UsersAsyncHandler(ExecutorService processExecutor, ExecutorService responseExecutor)
+  private IPresence presenceModel_;
+
+  public UsersAsyncHandler(IPresence presenceModel, ExecutorService processExecutor, ExecutorService responseExecutor)
   {
     super(processExecutor, responseExecutor);
+    presenceModel_ = presenceModel;
   }
 
   @Override
-  public void handleGet(IConsumer<IUserPresencePage> _consumer, Cursor cursor, CursorLimit limit) throws CanonException
+  public void handleGet(IConsumer<IUserPresencePage> canonConsumer, ITraceContext canonTrace, Cursor cursor,
+      CursorLimit limit) throws CanonException
   {
     try
     {
-      Builder builder = getModel().getUserPresencePageFactory().newBuilder();
+      UserPresencePage.Builder builder = UserPresencePage.BUILDER.newInstance();
       
-      builder.withData(new ArrayList<IUserPresence>(getModel().getAllUsers()));
+      builder.withData(new ArrayList<IUserPresence>(presenceModel_.getAllUsers()));
       
-      _consumer.consume(builder.build());
-      _consumer.close();
+      canonConsumer.consume(builder.build(), canonTrace);
+      canonConsumer.close();
     }
     catch(InvalidValueException e)
     {
@@ -73,10 +79,9 @@ public class UsersAsyncHandler extends UsersAsyncPathHandler
   }
 
   @Override
-  public void handlePut(Cursor cursor, CursorLimit limit) throws CanonException
+  public void handlePut(ITraceContext canonTrace, Cursor cursor, CursorLimit limit) throws CanonException
   {
     // TODO Auto-generated method stub
     
   }
-
 }

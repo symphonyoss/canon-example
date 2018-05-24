@@ -28,20 +28,27 @@ import java.util.concurrent.ExecutorService;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.UserId;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersFetchAsyncPathHandler;
-import org.symphonyoss.s2.canon.runtime.IConsumer;
+import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.runtime.exception.CanonException;
+import org.symphonyoss.s2.fugue.core.trace.ITraceContext;
+import org.symphonyoss.s2.fugue.pipeline.IConsumer;
 
 public class UsersFetchHandler extends UsersFetchAsyncPathHandler
 {
-  public UsersFetchHandler(ExecutorService processExecutor, ExecutorService responseExecutor)
+  private IPresence presenceModel_;
+
+  public UsersFetchHandler(IPresence presenceModel, ExecutorService processExecutor, ExecutorService responseExecutor)
   {
     super(processExecutor, responseExecutor);
+    
+    presenceModel_ = presenceModel;
   }
 
   @Override
-  public void handlePost(UserId _payload, IConsumer<IUserPresence> _consumer) throws CanonException
+  public void handlePost(UserId canonPayload, IConsumer<IUserPresence> canonConsumer, ITraceContext canonTrace)
+      throws CanonException
   {
-    _consumer.consume(getModel().getUser(_payload));
+    canonConsumer.consume(presenceModel_.getUser(canonPayload), canonTrace);
   }
 
 }

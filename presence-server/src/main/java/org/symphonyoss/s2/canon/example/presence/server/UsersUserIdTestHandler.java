@@ -22,13 +22,14 @@
 
 package org.symphonyoss.s2.canon.example.presence.server;
 
-import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.UserId;
-import org.symphonyoss.s2.canon.example.presence.canon.UserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUserIdTestPathHandler;
+import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.runtime.exception.CanonException;
+import org.symphonyoss.s2.fugue.core.trace.ITraceContext;
 
 /**
  * Facade for Path name=UsersUserIdTest
@@ -41,22 +42,16 @@ import org.symphonyoss.s2.canon.runtime.exception.CanonException;
 @Immutable
 public class UsersUserIdTestHandler extends UsersUserIdTestPathHandler
 {
-  /**
-   * get /users/{userId}/test
-   * No summary given.
-   * Fetch a single user's presence.
-   * @param userId                    No summary given.
-   * @return A UserPresence
-   * @throws CanonException                    If the method cannot be called
-   */
-  @Override
-  public @Nonnull UserPresence handleGet(
-    @Nonnull  UserId                    userId
-  )
-  throws CanonException
-  	{
-  	   // TODO Auto-generated method stub
-    return null;
-	}
+  private IPresence presenceModel_;
 
+  public UsersUserIdTestHandler(IPresence presenceModel)
+  {
+    presenceModel_ = presenceModel;
+  }
+
+  @Override
+  public IUserPresence handleGet(ITraceContext canonTrace, UserId userId) throws CanonException
+  {
+    return presenceModel_.getUser(userId);
+  }
 }

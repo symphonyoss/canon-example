@@ -33,11 +33,10 @@
 
   
   <dependencies>
-    <!-- <dependency>
-      <groupId>org.symphonyoss.s2.canon</groupId>
-      <artifactId>canon-parser</artifactId>
-      <version>${project.version}</version>
-    </dependency> -->
+    <dependency>
+        <groupId>org.symphonyoss.s2.fugue</groupId>
+        <artifactId>fugue-core</artifactId>
+      </dependency>
     <dependency>
       <groupId>org.symphonyoss.s2.canon</groupId>
       <artifactId>canon-template-java</artifactId>

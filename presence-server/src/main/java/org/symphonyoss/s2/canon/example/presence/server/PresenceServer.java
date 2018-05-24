@@ -30,39 +30,35 @@ import java.util.concurrent.Executors;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceModelServlet;
 import org.symphonyoss.s2.canon.example.presence.facade.Presence;
 import org.symphonyoss.s2.fugue.FugueServer;
-import org.symphonyoss.s2.fugue.di.IDIContext;
-import org.symphonyoss.s2.fugue.di.component.impl.Slf4jLogComponent;
+import org.symphonyoss.s2.fugue.core.trace.log.LoggerTraceContextFactory;
 
 public class PresenceServer extends FugueServer
 {
-  private Presence model_    = new Presence();
-  ExecutorService  executor_ = Executors.newFixedThreadPool(50);
+  
   
   public PresenceServer()
   {
     super("PresenceServer", 8080);
   }
-  
-  @Override
-  public void registerComponents(IDIContext diContext)
-  {
-    diContext.register(new Slf4jLogComponent())
-      .register(model_)
-      .register(new PresenceModelServlet())
-      .register(new UsersFetchHandler(executor_, executor_))
-      .register(new UsersAsyncHandler(executor_, executor_))
-      .register(new UsersUserIdHandler())
-      .register(new UsersUserIdTestHandler())
-      //.register(new UsersUpdateHandler())
-      .register(new UsersUpdateAsyncHandler(executor_, executor_)
-    );
-  }
+
 
   public static void main(String[] argv) throws IOException
   {
     PresenceServer server = new PresenceServer();
+    Presence model    = new Presence();
+    ExecutorService  executor = Executors.newFixedThreadPool(50);
     
-    server.start();
+    PresenceModelServlet servlet = new PresenceModelServlet(new LoggerTraceContextFactory(),
+        new UsersUserIdHandler(model),
+        new UsersUserIdTestHandler(model),
+        new UsersAsyncHandler(model, executor, executor),
+        new UsersFetchHandler(model, executor, executor),
+//      new UsersUpdateHandler(model),
+        new UsersUpdateAsyncHandler(model, executor, executor)
+        );
+    
+    server.withComponents(model, servlet)
+      .start();
     
     try
     {

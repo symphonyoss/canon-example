@@ -22,17 +22,18 @@
 
 package org.symphonyoss.s2.canon.example.presence.server;
 
-import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresenceList;
+import org.symphonyoss.s2.canon.example.presence.canon.UserPresenceInfo;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUpdatePathHandler;
-import org.symphonyoss.s2.canon.runtime.exception.CanonException;
+import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
 import org.symphonyoss.s2.common.exception.InvalidValueException;
+import org.symphonyoss.s2.fugue.core.trace.ITraceContext;
 
 /**
  * Facade for Path name=UsersUpdate
@@ -47,26 +48,22 @@ public class UsersUpdateHandler extends UsersUpdatePathHandler
 {
   private static final Logger log_ = LoggerFactory.getLogger(UsersUpdateHandler.class);
   
-  /**
-   * post /users/update
-   * No summary given.
-   * 
-   * @param _payload The request payload
-   * @throws CanonException                    If the method cannot be called
-   */
-  @Override
-  public void handlePost(
-    @Nonnull  IUserPresenceList          _payload
+  private IPresence presenceModel_;
 
-  )
-  throws CanonException
+  public UsersUpdateHandler(IPresence presenceModel)
+  {
+    presenceModel_ = presenceModel;
+  }
+  
+  @Override
+  public void handlePost(IUserPresenceList canonPayload, ITraceContext canonTrace) throws ServerErrorException
   	{
-  	  for(IUserPresence userPresence : _payload.getData())
+  	  for(IUserPresence userPresence : canonPayload.getData())
   	  {
   	    try
         {
-          getModel().setUser(userPresence.getUserId(),
-              getModel().getUserPresenceInfoFactory().newBuilder()
+  	      presenceModel_.setUser(userPresence.getUserId(),
+              UserPresenceInfo.BUILDER.newInstance()
                 .withStatus(userPresence.getStatus())
                 .withText(userPresence.getText())
                 .build()

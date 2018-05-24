@@ -32,22 +32,32 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceHttpModelClient;
+import org.symphonyoss.s2.canon.example.presence.canon.PresenceModel;
 import org.symphonyoss.s2.canon.example.presence.canon.UserId;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUserIdGetHttpRequest;
-import org.symphonyoss.s2.canon.example.presence.facade.Presence;
 import org.symphonyoss.s2.canon.runtime.IModelRegistry;
 import org.symphonyoss.s2.canon.runtime.ModelRegistry;
-import org.symphonyoss.s2.canon.runtime.exception.BadRequestException;
-import org.symphonyoss.s2.common.exception.InvalidValueException;
 
+/**
+ * Fetch user 4 using the REST endpoint.
+ * 
+ * @author Bruce Skingle
+ *
+ */
 public class GetUsers4
 {
   private static final Logger log_ = LoggerFactory.getLogger(GetUsers4.class);
   
-  public static void main(String[] argv) throws InvalidValueException, BadRequestException, IOException
+  /**
+   * Main.
+   * 
+   * @param argv  Command line args - ignored.
+   * 
+   * @throws Exception   If something goes wrong. This is just an example.
+   */
+  public static void main(String[] argv) throws Exception
   {
-    Presence                model   = new Presence();
-    IModelRegistry          registry = new ModelRegistry().register(model);
+    IModelRegistry          registry = new ModelRegistry().withFactories(PresenceModel.FACTORIES);
     PresenceHttpModelClient client  = new PresenceHttpModelClient(registry, "http://localhost:8080");
     
     UsersUserIdGetHttpRequest request = client.newUsersUserIdGetHttpRequestBuilder()

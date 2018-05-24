@@ -22,15 +22,15 @@
 
 package org.symphonyoss.s2.canon.example.presence.server;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresenceInfo;
 import org.symphonyoss.s2.canon.example.presence.canon.UserId;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUserIdPathHandler;
-import org.symphonyoss.s2.canon.runtime.exception.CanonException;
+import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
+import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
+import org.symphonyoss.s2.fugue.core.trace.ITraceContext;
 
 /**
  * Facade for Path name=UsersUserId
@@ -43,36 +43,24 @@ import org.symphonyoss.s2.canon.runtime.exception.CanonException;
 @Immutable
 public class UsersUserIdHandler extends UsersUserIdPathHandler
 {
-  /**
-   * get /users/{userId}
-   * No summary given.
-   * Fetch a single user's presence.
-   * @param userId                    No summary given.
-   * @return A UserPresence
-   * or <code>null</code>
-   * @throws CanonException                    If the method cannot be called
-   */
-  @Override
-  public @Nullable IUserPresence handleGet(@Nonnull UserId userId)
-  throws CanonException
-  	{
-  	  IUserPresence result = getModel().getUser(userId);
-  	  
-    return result;
-	}
+  private IPresence presenceModel_;
 
-  /**
-   * put /users/{userId}
-   * No summary given.
-   * Set a single user's presence.
-   * @param _payload The request payload
-   * @param userId                    No summary given.
-   * @throws CanonException                    If the method cannot be called
-   */
+  public UsersUserIdHandler(IPresence presenceModel)
+  {
+    presenceModel_ = presenceModel;
+  }
+
   @Override
-  public void handlePut(@Nonnull IUserPresenceInfo _payload, @Nonnull UserId userId)
-  throws CanonException
-  	{
-  	   getModel().setUser(userId, _payload);
-	}
+  public IUserPresence handleGet(ITraceContext canonTrace, UserId userId)
+  {
+    IUserPresence result = presenceModel_.getUser(userId);
+    
+    return result;
+  }
+
+  @Override
+  public void handlePut(IUserPresenceInfo canonPayload, ITraceContext canonTrace, UserId userId) throws ServerErrorException
+  {
+    presenceModel_.setUser(userId, canonPayload);
+  }
 }

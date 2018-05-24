@@ -36,25 +36,18 @@ import java.util.TreeMap;
 
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresenceInfo;
-import org.symphonyoss.s2.canon.example.presence.canon.PresenceModel;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceStatus;
 import org.symphonyoss.s2.canon.example.presence.canon.UserId;
+import org.symphonyoss.s2.canon.example.presence.canon.UserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.UserPresenceEntity.Builder;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
 import org.symphonyoss.s2.common.exception.InvalidValueException;
 import org.symphonyoss.s2.common.fault.ProgramFault;
-import org.symphonyoss.s2.fugue.di.ComponentDescriptor;
+import org.symphonyoss.s2.fugue.IFugueComponent;
 
-public class Presence extends PresenceModel implements IPresence
+public class Presence implements IPresence, IFugueComponent
 {
   private TreeMap<UserId, IUserPresence> presenceMap_ = new TreeMap<>();
-  
-  @Override
-  public ComponentDescriptor getComponentDescriptor()
-  {
-    return super.getComponentDescriptor()
-        .addStart(() -> initialize());
-  }
 
   @Override
   public synchronized Collection<IUserPresence> getAllUsers()
@@ -73,7 +66,7 @@ public class Presence extends PresenceModel implements IPresence
   {
     try
     {
-      presenceMap_.put(userId, getUserPresenceFactory().newBuilder()
+      presenceMap_.put(userId, UserPresence.BUILDER.newInstance()
         .withUserId(userId)
         .withStatus(userPresenceInfo.getStatus())
         .withText(userPresenceInfo.getText())
@@ -85,13 +78,14 @@ public class Presence extends PresenceModel implements IPresence
     }
   }
   
-  private void initialize()
+  @Override
+  public void start()
   {
     /* Load presence data for known users */
     
     try
     {
-      Builder presenceBuilder = getUserPresenceFactory().newBuilder();
+      Builder presenceBuilder = UserPresence.BUILDER.newInstance();
       UserId userId;
       
       userId = UserId.newBuilder().build((long) 1);
@@ -123,6 +117,11 @@ public class Presence extends PresenceModel implements IPresence
     {
       throw new ProgramFault(e);
     }
+  }
+
+  @Override
+  public void stop()
+  {
   }
 }
 /*----------------------------------------------------------------------------------------------------

@@ -35,27 +35,36 @@ import org.symphonyoss.s2.canon.example.presence.canon.CursorLimit;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresencePage;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceHttpModelClient;
+import org.symphonyoss.s2.canon.example.presence.canon.PresenceModel;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersGetHttpRequest;
-import org.symphonyoss.s2.canon.example.presence.facade.Presence;
 import org.symphonyoss.s2.canon.runtime.IModelRegistry;
 import org.symphonyoss.s2.canon.runtime.ModelRegistry;
-import org.symphonyoss.s2.canon.runtime.exception.BadRequestException;
-import org.symphonyoss.s2.common.exception.InvalidValueException;
+import org.symphonyoss.s2.common.immutable.ImmutableByteArray;
 
-import com.google.protobuf.ByteString;
-
+/**
+ * Fetch all users by calling the REST endpoint.
+ * 
+ * @author Bruce Skingle
+ *
+ */
 public class GetUsers
 {
   private static final Logger log_ = LoggerFactory.getLogger(GetUsers.class);
   
-  public static void main(String[] argv) throws InvalidValueException, BadRequestException, IOException
+  /**
+   * Main.
+   * 
+   * @param argv  Command line args - ignored.
+   * 
+   * @throws Exception   If something goes wrong. This is just an example.
+   */
+  public static void main(String[] argv) throws Exception
   {
-    Presence                model   = new Presence();
-    IModelRegistry          registry = new ModelRegistry().register(model);
+    IModelRegistry          registry = new ModelRegistry().withFactories(PresenceModel.FACTORIES);
     PresenceHttpModelClient client  = new PresenceHttpModelClient(registry, "http://localhost:8080");
     
     UsersGetHttpRequest request = client.newUsersGetHttpRequestBuilder()
-      .withCursor(Cursor.newBuilder().build(ByteString.copyFrom("Hello".getBytes())))
+      .withCursor(Cursor.newBuilder().build(ImmutableByteArray.newInstance("Hello".getBytes())))
       .withLimit(CursorLimit.newBuilder().build(20))
       .build();
     
