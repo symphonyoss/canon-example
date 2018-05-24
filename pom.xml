@@ -18,7 +18,7 @@
 	<parent>
 		<groupId>org.symphonyoss.s2</groupId>
 		<artifactId>S2-super-pom</artifactId>
-		<version>0.1.6</version>
+		<version>0.1.7</version>
 	</parent>
 
 	<groupId>org.symphonyoss.s2.canon.example</groupId>
@@ -65,14 +65,14 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<s2.common.version>0.1.20-SNAPSHOT</s2.common.version>
+		<s2.common.version>0.1.20</s2.common.version>
 
-		<canon.version>0.0.19-SNAPSHOT</canon.version>
+		<canon.version>0.0.19</canon.version>
 		<canon.template.groupid>org.symphonyoss.s2.canon</canon.template.groupid>
 		<canon.template.java>canon-template-java</canon.template.java>
 		<canon.template.version>${canon.version}</canon.template.version>
 		
-		<fugue.version>0.0.9-SNAPSHOT</fugue.version>
+		<fugue.version>0.0.9</fugue.version>
     <gcp.project>sym-dev-arch</gcp.project>
 	</properties>
 
@@ -109,11 +109,6 @@
 			<dependency>
 				<groupId>org.symphonyoss.s2.common</groupId>
 				<artifactId>S2-common-dom-jackson</artifactId>
-				<version>${s2.common.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.symphonyoss.s2.common</groupId>
-				<artifactId>S2-common-crypto</artifactId>
 				<version>${s2.common.version}</version>
 			</dependency>
 

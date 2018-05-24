@@ -64,7 +64,9 @@ public class UsersUpdateAsyncHandler extends UsersUpdateAsyncPathHandler
    * post /users/update
    * No summary given.
    * 
-   * @param _payload The request payload
+   * @param canonPayload The request payload.
+   * @param canonTrace   A trace context.
+   * 
    * @throws CanonException                    If the method cannot be called
    */
 
