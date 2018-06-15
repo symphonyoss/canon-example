@@ -67,7 +67,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<s2.common.version>0.1.21</s2.common.version>
 
-		<canon.version>0.0.20</canon.version>
+		<canon.version>0.0.22</canon.version>
 		<canon.template.groupid>org.symphonyoss.s2.canon</canon.template.groupid>
 		<canon.template.java>canon-template-java</canon.template.java>
 		<canon.template.version>${canon.version}</canon.template.version>
