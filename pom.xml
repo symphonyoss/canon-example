@@ -18,7 +18,7 @@
 	<parent>
 		<groupId>org.symphonyoss.s2</groupId>
 		<artifactId>S2-super-pom</artifactId>
-		<version>0.1.7</version>
+    <version>0.1.8</version>
 	</parent>
 
 	<groupId>org.symphonyoss.s2.canon.example</groupId>
@@ -65,14 +65,14 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<s2.common.version>0.1.22-SNAPSHOT</s2.common.version>
+		<s2.common.version>0.1.22</s2.common.version>
 
-		<canon.version>0.0.23-SNAPSHOT</canon.version>
+		<canon.version>0.0.23</canon.version>
 		<canon.template.groupid>org.symphonyoss.s2.canon</canon.template.groupid>
 		<canon.template.java>canon-template-java</canon.template.java>
 		<canon.template.version>${canon.version}</canon.template.version>
 		
-		<fugue.version>0.0.14-SNAPSHOT</fugue.version>
+		<fugue.version>0.0.17</fugue.version>
     <gcp.project>sym-dev-arch</gcp.project>
 	</properties>
 
