@@ -29,6 +29,8 @@ import java.util.concurrent.Executors;
 
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceModelServlet;
 import org.symphonyoss.s2.canon.example.presence.facade.Presence;
+import org.symphonyoss.s2.canon.example.presence.facade.PresenceJwtGenerator;
+import org.symphonyoss.s2.canon.runtime.jjwt.JwtSubjectAuthenticator;
 import org.symphonyoss.s2.fugue.FugueServer;
 import org.symphonyoss.s2.fugue.core.trace.log.LoggerTraceContextFactory;
 
@@ -47,14 +49,15 @@ public class PresenceServer extends FugueServer
     PresenceServer server = new PresenceServer();
     Presence model    = new Presence();
     ExecutorService  executor = Executors.newFixedThreadPool(50);
+    JwtSubjectAuthenticator authenticator = new JwtSubjectAuthenticator(new PresenceJwtGenerator().getKey(), 3600000L);
     
     PresenceModelServlet servlet = new PresenceModelServlet(new LoggerTraceContextFactory(),
-        new UsersUserIdHandler(model),
-        new UsersUserIdTestHandler(model),
-        new UsersAsyncHandler(model, executor, executor),
-        new UsersFetchHandler(model, executor, executor),
-//      new UsersUpdateHandler(model),
-        new UsersUpdateAsyncHandler(model, executor, executor)
+        new UsersUserIdHandler(model, authenticator),
+        new UsersUserIdTestHandler(model, authenticator),
+        new UsersAsyncHandler(model, executor, executor, authenticator),
+        new UsersFetchHandler(model, executor, executor, authenticator),
+//      new UsersUpdateHandler(model, authenticator),
+        new UsersUpdateAsyncHandler(model, executor, executor, authenticator)
         );
     
     server.withComponents(model, servlet)

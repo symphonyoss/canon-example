@@ -30,6 +30,7 @@ import org.symphonyoss.s2.canon.example.presence.canon.UserId;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUserIdPathHandler;
 import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
+import org.symphonyoss.s2.canon.runtime.http.IRequestAuthenticator;
 import org.symphonyoss.s2.fugue.core.trace.ITraceContext;
 
 /**
@@ -41,17 +42,19 @@ import org.symphonyoss.s2.fugue.core.trace.ITraceContext;
  * Bind Path			users/
  */
 @Immutable
-public class UsersUserIdHandler extends UsersUserIdPathHandler
+public class UsersUserIdHandler extends UsersUserIdPathHandler<String>
 {
   private IPresence presenceModel_;
 
-  public UsersUserIdHandler(IPresence presenceModel)
+  public UsersUserIdHandler(IPresence presenceModel, IRequestAuthenticator<String> authenticator)
   {
+    super(authenticator);
+    
     presenceModel_ = presenceModel;
   }
 
   @Override
-  public IUserPresence handleGet(ITraceContext canonTrace, UserId userId)
+  public IUserPresence handleGet(String canonAuth, ITraceContext canonTrace, UserId userId)
   {
     IUserPresence result = presenceModel_.getUser(userId);
     
@@ -59,7 +62,7 @@ public class UsersUserIdHandler extends UsersUserIdPathHandler
   }
 
   @Override
-  public void handlePut(IUserPresenceInfo canonPayload, ITraceContext canonTrace, UserId userId) throws ServerErrorException
+  public void handlePut(IUserPresenceInfo canonPayload, String canonAuth, ITraceContext canonTrace, UserId userId) throws ServerErrorException
   {
     presenceModel_.setUser(userId, canonPayload);
   }

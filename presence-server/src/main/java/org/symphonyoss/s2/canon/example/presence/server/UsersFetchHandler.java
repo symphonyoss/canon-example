@@ -30,22 +30,23 @@ import org.symphonyoss.s2.canon.example.presence.canon.UserId;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersFetchAsyncPathHandler;
 import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.runtime.exception.CanonException;
+import org.symphonyoss.s2.canon.runtime.http.IRequestAuthenticator;
 import org.symphonyoss.s2.fugue.core.trace.ITraceContext;
 import org.symphonyoss.s2.fugue.pipeline.IConsumer;
 
-public class UsersFetchHandler extends UsersFetchAsyncPathHandler
+public class UsersFetchHandler extends UsersFetchAsyncPathHandler<String>
 {
   private IPresence presenceModel_;
 
-  public UsersFetchHandler(IPresence presenceModel, ExecutorService processExecutor, ExecutorService responseExecutor)
+  public UsersFetchHandler(IPresence presenceModel, ExecutorService processExecutor, ExecutorService responseExecutor, IRequestAuthenticator<String> authenticator)
   {
-    super(processExecutor, responseExecutor);
+    super(processExecutor, responseExecutor, authenticator);
     
     presenceModel_ = presenceModel;
   }
 
   @Override
-  public void handlePost(UserId canonPayload, IConsumer<IUserPresence> canonConsumer, ITraceContext canonTrace)
+  public void handlePost(UserId canonPayload, IConsumer<IUserPresence> canonConsumer, String canonAuth, ITraceContext canonTrace)
       throws CanonException
   {
     canonConsumer.consume(presenceModel_.getUser(canonPayload), canonTrace);

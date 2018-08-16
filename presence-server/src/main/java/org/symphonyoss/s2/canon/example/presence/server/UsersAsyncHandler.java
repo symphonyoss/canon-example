@@ -36,6 +36,7 @@ import org.symphonyoss.s2.canon.example.presence.canon.UsersAsyncPathHandler;
 import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.runtime.exception.CanonException;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
+import org.symphonyoss.s2.canon.runtime.http.IRequestAuthenticator;
 import org.symphonyoss.s2.common.exception.InvalidValueException;
 import org.symphonyoss.s2.fugue.core.trace.ITraceContext;
 import org.symphonyoss.s2.fugue.pipeline.IConsumer;
@@ -49,20 +50,21 @@ import org.symphonyoss.s2.fugue.pipeline.IConsumer;
  * Bind Path			users
  */
 @Immutable
-public class UsersAsyncHandler extends UsersAsyncPathHandler
+public class UsersAsyncHandler extends UsersAsyncPathHandler<String>
 {
   private IPresence presenceModel_;
 
-  public UsersAsyncHandler(IPresence presenceModel, ExecutorService processExecutor, ExecutorService responseExecutor)
+  public UsersAsyncHandler(IPresence presenceModel, ExecutorService processExecutor, ExecutorService responseExecutor, IRequestAuthenticator<String> authenticator)
   {
-    super(processExecutor, responseExecutor);
+    super(processExecutor, responseExecutor, authenticator);
     presenceModel_ = presenceModel;
   }
 
   @Override
-  public void handleGet(IConsumer<IUserPresencePage> canonConsumer, ITraceContext canonTrace, Cursor cursor,
+  public void handleGet(IConsumer<IUserPresencePage> canonConsumer, String canonAuth, ITraceContext canonTrace, Cursor cursor,
       CursorLimit limit) throws CanonException
   {
+    System.err.println("Authenticated caller is " + canonAuth);
     try
     {
       UserPresencePage.Builder builder = UserPresencePage.BUILDER.newInstance();
@@ -79,7 +81,7 @@ public class UsersAsyncHandler extends UsersAsyncPathHandler
   }
 
   @Override
-  public void handlePut(ITraceContext canonTrace, Cursor cursor, CursorLimit limit) throws CanonException
+  public void handlePut(String canonAuth, ITraceContext canonTrace, Cursor cursor, CursorLimit limit) throws CanonException
   {
     // TODO Auto-generated method stub
     

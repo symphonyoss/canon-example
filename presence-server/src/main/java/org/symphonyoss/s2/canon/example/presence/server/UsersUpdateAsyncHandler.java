@@ -35,6 +35,7 @@ import org.symphonyoss.s2.canon.example.presence.canon.UsersUpdateAsyncPathHandl
 import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.runtime.exception.CanonException;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
+import org.symphonyoss.s2.canon.runtime.http.IRequestAuthenticator;
 import org.symphonyoss.s2.common.exception.InvalidValueException;
 import org.symphonyoss.s2.fugue.core.trace.ITraceContext;
 
@@ -47,15 +48,15 @@ import org.symphonyoss.s2.fugue.core.trace.ITraceContext;
  * Bind Path			users/update
  */
 @Immutable
-public class UsersUpdateAsyncHandler extends UsersUpdateAsyncPathHandler
+public class UsersUpdateAsyncHandler extends UsersUpdateAsyncPathHandler<String>
 {
   private static final Logger log_ = LoggerFactory.getLogger(UsersUpdateAsyncHandler.class);
   
   private IPresence presenceModel_;
   
-  public UsersUpdateAsyncHandler(IPresence presenceModel, ExecutorService processExecutor, ExecutorService responseExecutor)
+  public UsersUpdateAsyncHandler(IPresence presenceModel, ExecutorService processExecutor, ExecutorService responseExecutor, IRequestAuthenticator<String> authenticator)
   {
-    super(processExecutor, responseExecutor);
+    super(processExecutor, responseExecutor, authenticator);
     
     presenceModel_= presenceModel;
   }
@@ -71,7 +72,7 @@ public class UsersUpdateAsyncHandler extends UsersUpdateAsyncPathHandler
    */
 
   @Override
-  public void handlePost(IUserPresenceList canonPayload, ITraceContext canonTrace) throws CanonException
+  public void handlePost(IUserPresenceList canonPayload, String canonAuth, ITraceContext canonTrace) throws CanonException
   {
     for(IUserPresence userPresence : canonPayload.getData())
     {
