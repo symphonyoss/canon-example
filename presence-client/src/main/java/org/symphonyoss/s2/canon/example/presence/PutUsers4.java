@@ -37,6 +37,7 @@ import org.symphonyoss.s2.canon.example.presence.canon.PresenceStatus;
 import org.symphonyoss.s2.canon.example.presence.canon.UserId;
 import org.symphonyoss.s2.canon.example.presence.canon.UserPresenceInfo;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUserIdPutHttpRequest;
+import org.symphonyoss.s2.canon.example.presence.facade.PresenceJwtGenerator;
 import org.symphonyoss.s2.canon.runtime.IModelRegistry;
 import org.symphonyoss.s2.canon.runtime.ModelRegistry;
 
@@ -60,7 +61,7 @@ public class PutUsers4
   public static void main(String[] argv) throws Exception
   {
     IModelRegistry          registry = new ModelRegistry().withFactories(PresenceModel.FACTORIES);
-    PresenceHttpModelClient client  = new PresenceHttpModelClient(registry, "http://localhost:8080");
+    PresenceHttpModelClient client  = new PresenceHttpModelClient(registry, "http://localhost:8080", null, new PresenceJwtGenerator());
     
     IUserPresenceInfo japiPayload = UserPresenceInfo.BUILDER.newInstance()
         .withStatus(PresenceStatus.DoNotDisturb)

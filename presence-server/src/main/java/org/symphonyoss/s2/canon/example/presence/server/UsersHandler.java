@@ -37,6 +37,7 @@ import org.symphonyoss.s2.canon.example.presence.canon.UsersPathHandler;
 import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.runtime.exception.CanonException;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
+import org.symphonyoss.s2.canon.runtime.http.IRequestAuthenticator;
 import org.symphonyoss.s2.common.exception.InvalidValueException;
 import org.symphonyoss.s2.fugue.core.trace.ITraceContext;
 
@@ -49,12 +50,14 @@ import org.symphonyoss.s2.fugue.core.trace.ITraceContext;
  * Bind Path			users
  */
 @Immutable
-public class UsersHandler extends UsersPathHandler
+public class UsersHandler extends UsersPathHandler<String>
 {
   private IPresence presenceModel_;
 
-  public UsersHandler(IPresence presenceModel)
+  public UsersHandler(IPresence presenceModel, IRequestAuthenticator<String> authenticator)
   {
+    super(authenticator);
+    
     presenceModel_ = presenceModel;
   }
 
@@ -69,12 +72,14 @@ public class UsersHandler extends UsersPathHandler
    */
   @Override
   public @Nonnull IUserPresencePage handleGet(
-      ITraceContext                     traceContext,
+              String                    canonAuth,
+              ITraceContext             traceContext,
     @Nullable Cursor                    cursor,
     @Nullable CursorLimit               limit
   )
   throws CanonException
-  	{
+  {
+    System.err.println("Authenticated caller is " + canonAuth);
     try
     {
       UserPresencePage.Builder builder = UserPresencePage.BUILDER.newInstance();
@@ -91,7 +96,7 @@ public class UsersHandler extends UsersPathHandler
 
   @Override
   public void handlePut(
-      ITraceContext traceContext,Cursor cursor, CursorLimit limit) throws CanonException
+      String canonAuth, ITraceContext traceContext, Cursor cursor, CursorLimit limit) throws CanonException
   {
     // TODO Auto-generated method stub
     

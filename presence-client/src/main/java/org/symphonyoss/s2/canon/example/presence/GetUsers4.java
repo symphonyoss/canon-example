@@ -35,6 +35,7 @@ import org.symphonyoss.s2.canon.example.presence.canon.PresenceHttpModelClient;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceModel;
 import org.symphonyoss.s2.canon.example.presence.canon.UserId;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersUserIdGetHttpRequest;
+import org.symphonyoss.s2.canon.example.presence.facade.PresenceJwtGenerator;
 import org.symphonyoss.s2.canon.runtime.IModelRegistry;
 import org.symphonyoss.s2.canon.runtime.ModelRegistry;
 
@@ -58,7 +59,7 @@ public class GetUsers4
   public static void main(String[] argv) throws Exception
   {
     IModelRegistry          registry = new ModelRegistry().withFactories(PresenceModel.FACTORIES);
-    PresenceHttpModelClient client  = new PresenceHttpModelClient(registry, "http://localhost:8080");
+    PresenceHttpModelClient client  = new PresenceHttpModelClient(registry, "http://localhost:8080", null, new PresenceJwtGenerator());
     
     UsersUserIdGetHttpRequest request = client.newUsersUserIdGetHttpRequestBuilder()
       .withUserId(UserId.newBuilder().build(4L))
