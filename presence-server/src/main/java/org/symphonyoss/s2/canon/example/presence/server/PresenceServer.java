@@ -32,7 +32,7 @@ import org.symphonyoss.s2.canon.example.presence.facade.Presence;
 import org.symphonyoss.s2.canon.example.presence.facade.PresenceJwtGenerator;
 import org.symphonyoss.s2.canon.runtime.jjwt.JwtSubjectAuthenticator;
 import org.symphonyoss.s2.fugue.FugueServer;
-import org.symphonyoss.s2.fugue.core.trace.log.LoggerTraceContextFactory;
+import org.symphonyoss.s2.fugue.core.trace.log.LoggerTraceContextTransactionFactory;
 
 public class PresenceServer extends FugueServer
 {
@@ -51,7 +51,7 @@ public class PresenceServer extends FugueServer
     ExecutorService  executor = Executors.newFixedThreadPool(50);
     JwtSubjectAuthenticator authenticator = new JwtSubjectAuthenticator(new PresenceJwtGenerator().getKey(), 3600000L, "unknown");
     
-    PresenceModelServlet servlet = new PresenceModelServlet(new LoggerTraceContextFactory(),
+    PresenceModelServlet servlet = new PresenceModelServlet(new LoggerTraceContextTransactionFactory(),
         new UsersUserIdHandler(model, authenticator),
         new UsersUserIdTestHandler(model, authenticator),
         new UsersAsyncHandler(model, executor, executor, authenticator),
