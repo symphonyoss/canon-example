@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.symphonyoss.s2.canon.example.presence.PresenceConstants;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceModelServlet;
 import org.symphonyoss.s2.canon.example.presence.facade.Presence;
 import org.symphonyoss.s2.canon.example.presence.facade.PresenceJwtGenerator;
@@ -36,11 +37,11 @@ import org.symphonyoss.s2.fugue.core.trace.log.LoggerTraceContextTransactionFact
 
 public class PresenceServer extends FugueServer
 {
-  
-  
+
+
   public PresenceServer()
   {
-    super("PresenceServer", 8080);
+    super("PresenceServer", PresenceConstants.SERVER_PORT);
   }
 
 
@@ -56,7 +57,8 @@ public class PresenceServer extends FugueServer
         new UsersUserIdHandler(model, authenticator),
         new UsersUserIdTestHandler(model, authenticator),
         new UsersAsyncHandler(model, executor, executor, authenticator),
-        new UsersFetchHandler(model, executor, executor, authenticator),
+        new UsersFetchHandler(model, authenticator),
+//        new UsersFetchAsyncHandler(model, executor, executor, authenticator),
 //      new UsersUpdateHandler(model, authenticator),
         new UsersUpdateAsyncHandler(model, executor, executor, authenticator)
         );

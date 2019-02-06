@@ -23,51 +23,33 @@
 
 package org.symphonyoss.s2.canon.example.presence.server;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 import org.symphonyoss.s2.canon.example.presence.canon.IUserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.UserId;
-import org.symphonyoss.s2.canon.example.presence.canon.UsersFetchPathHandler;
+import org.symphonyoss.s2.canon.example.presence.canon.UsersFetchAsyncPathHandler;
 import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.runtime.exception.CanonException;
 import org.symphonyoss.s2.canon.runtime.http.IRequestAuthenticator;
 import org.symphonyoss.s2.fugue.core.trace.ITraceContext;
+import org.symphonyoss.s2.fugue.pipeline.IConsumer;
 
-public class UsersFetchHandler extends UsersFetchPathHandler<String>
+public class UsersAsyncFetchHandler extends UsersFetchAsyncPathHandler<String>
 {
   private IPresence presenceModel_;
 
-  public UsersFetchHandler(IPresence presenceModel, IRequestAuthenticator<String> authenticator)
+  public UsersAsyncFetchHandler(IPresence presenceModel, ExecutorService processExecutor, ExecutorService responseExecutor, IRequestAuthenticator<String> authenticator)
   {
-    super(authenticator);
+    super(processExecutor, responseExecutor, authenticator);
     
     presenceModel_ = presenceModel;
   }
 
   @Override
-  public List<IUserPresence> handlePost(List<UserId> canonPayload, String canonAuth, ITraceContext canonTrace) throws CanonException
+  public void handlePost(UserId canonPayload, IConsumer<IUserPresence> canonConsumer, String canonAuth, ITraceContext canonTrace)
+      throws CanonException
   {
-    List<IUserPresence> result = new LinkedList<>();
-    
-    for(UserId userId : canonPayload)
-      result.add(presenceModel_.getUser(userId));
-    
-    return result;
+    canonConsumer.consume(presenceModel_.getUser(canonPayload), canonTrace);
   }
-
-//  public UsersFetchHandler(IPresence presenceModel, ExecutorService processExecutor, ExecutorService responseExecutor, IRequestAuthenticator<String> authenticator)
-//  {
-//    super(processExecutor, responseExecutor, authenticator);
-//    
-//    presenceModel_ = presenceModel;
-//  }
-//
-//  @Override
-//  public void handlePost(UserId canonPayload, IConsumer<IUserPresence> canonConsumer, String canonAuth, ITraceContext canonTrace)
-//      throws CanonException
-//  {
-//    canonConsumer.consume(presenceModel_.getUser(canonPayload), canonTrace);
-//  }
 
 }
