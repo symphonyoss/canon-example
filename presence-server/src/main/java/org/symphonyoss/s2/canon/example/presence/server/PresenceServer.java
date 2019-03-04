@@ -28,9 +28,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.symphonyoss.s2.canon.example.presence.PresenceConstants;
+import org.symphonyoss.s2.canon.example.presence.canon.PresenceModel;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceModelServlet;
 import org.symphonyoss.s2.canon.example.presence.facade.Presence;
 import org.symphonyoss.s2.canon.example.presence.facade.PresenceJwtGenerator;
+import org.symphonyoss.s2.canon.runtime.ModelRegistry;
 import org.symphonyoss.s2.canon.runtime.jjwt.JwtSubjectAuthenticator;
 import org.symphonyoss.s2.fugue.FugueServer;
 import org.symphonyoss.s2.fugue.core.trace.log.LoggerTraceContextTransactionFactory;
@@ -50,9 +52,10 @@ public class PresenceServer extends FugueServer
     PresenceServer server = new PresenceServer();
     Presence model    = new Presence();
     ExecutorService  executor = Executors.newFixedThreadPool(50);
-    JwtSubjectAuthenticator authenticator = new JwtSubjectAuthenticator(new PresenceJwtGenerator().getKey(), 3600000L, "unknown");
+    PresenceJwtGenerator generator = new PresenceJwtGenerator();
+    JwtSubjectAuthenticator authenticator = new JwtSubjectAuthenticator(generator.getKey(), 3600000L, "unknown", generator.signatureAlgorithm.toString());
     
-    PresenceModelServlet servlet = new PresenceModelServlet(new LoggerTraceContextTransactionFactory(),
+    PresenceModelServlet servlet = new PresenceModelServlet(new LoggerTraceContextTransactionFactory(), new ModelRegistry().withFactories(PresenceModel.FACTORIES),
 
         new UsersUserIdHandler(model, authenticator),
         new UsersUserIdTestHandler(model, authenticator),

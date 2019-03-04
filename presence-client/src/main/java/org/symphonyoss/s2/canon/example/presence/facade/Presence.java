@@ -41,8 +41,6 @@ import org.symphonyoss.s2.canon.example.presence.canon.UserId;
 import org.symphonyoss.s2.canon.example.presence.canon.UserPresence;
 import org.symphonyoss.s2.canon.example.presence.canon.UserPresenceEntity.Builder;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
-import org.symphonyoss.s2.common.exception.InvalidValueException;
-import org.symphonyoss.s2.common.fault.ProgramFault;
 import org.symphonyoss.s2.fugue.IFugueComponent;
 
 public class Presence implements IPresence, IFugueComponent
@@ -64,18 +62,11 @@ public class Presence implements IPresence, IFugueComponent
   @Override
   public synchronized void setUser(UserId userId, IUserPresenceInfo userPresenceInfo) throws ServerErrorException
   {
-    try
-    {
-      presenceMap_.put(userId, UserPresence.BUILDER.newInstance()
-        .withUserId(userId)
-        .withStatus(userPresenceInfo.getStatus())
-        .withText(userPresenceInfo.getText())
-        .build());
-    }
-    catch(InvalidValueException e)
-    {
-      throw new ServerErrorException(e);
-    }
+    presenceMap_.put(userId, UserPresence.BUILDER.newInstance()
+      .withUserId(userId)
+      .withStatus(userPresenceInfo.getStatus())
+      .withText(userPresenceInfo.getText())
+      .build());
   }
   
   @Override
@@ -83,40 +74,33 @@ public class Presence implements IPresence, IFugueComponent
   {
     /* Load presence data for known users */
     
-    try
-    {
-      Builder presenceBuilder = UserPresence.BUILDER.newInstance();
-      UserId userId;
-      
-      userId = UserId.newBuilder().build((long) 1);
-      
-      presenceBuilder.withUserId(userId);
-      presenceBuilder.withStatus(PresenceStatus.Available);
-      presenceBuilder.withText("I'm Free!");
-      
-      presenceMap_.put(userId, presenceBuilder.build());
-      
-      userId = UserId.newBuilder().build((long) 2);
-      
-      presenceBuilder.withUserId(userId);
-      presenceBuilder.withStatus(PresenceStatus.Available);
-      presenceBuilder.withText("Talk to me!");
-      
-      presenceMap_.put(userId, presenceBuilder.build());
-      
-  
-      userId = UserId.newBuilder().build((long) 3);
-      
-      presenceBuilder.withUserId(userId);
-      presenceBuilder.withStatus(PresenceStatus.Busy);
-      presenceBuilder.withText("");
-      
-      presenceMap_.put(userId, presenceBuilder.build());
-    }
-    catch(InvalidValueException e)
-    {
-      throw new ProgramFault(e);
-    }
+    Builder presenceBuilder = UserPresence.BUILDER.newInstance();
+    UserId userId;
+    
+    userId = UserId.newBuilder().build((long) 1);
+    
+    presenceBuilder.withUserId(userId);
+    presenceBuilder.withStatus(PresenceStatus.Available);
+    presenceBuilder.withText("I'm Free!");
+    
+    presenceMap_.put(userId, presenceBuilder.build());
+    
+    userId = UserId.newBuilder().build((long) 2);
+    
+    presenceBuilder.withUserId(userId);
+    presenceBuilder.withStatus(PresenceStatus.Available);
+    presenceBuilder.withText("Talk to me!");
+    
+    presenceMap_.put(userId, presenceBuilder.build());
+    
+
+    userId = UserId.newBuilder().build((long) 3);
+    
+    presenceBuilder.withUserId(userId);
+    presenceBuilder.withStatus(PresenceStatus.Busy);
+    presenceBuilder.withText("");
+    
+    presenceMap_.put(userId, presenceBuilder.build());
   }
 
   @Override

@@ -35,9 +35,7 @@ import org.symphonyoss.s2.canon.example.presence.canon.UserPresencePage;
 import org.symphonyoss.s2.canon.example.presence.canon.UsersAsyncPathHandler;
 import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.runtime.exception.CanonException;
-import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
 import org.symphonyoss.s2.canon.runtime.http.IRequestAuthenticator;
-import org.symphonyoss.s2.common.exception.InvalidValueException;
 import org.symphonyoss.s2.fugue.core.trace.ITraceContext;
 import org.symphonyoss.s2.fugue.pipeline.IConsumer;
 
@@ -65,19 +63,12 @@ public class UsersAsyncHandler extends UsersAsyncPathHandler<String>
       CursorLimit limit) throws CanonException
   {
     System.err.println("Authenticated caller is " + canonAuth);
-    try
-    {
-      UserPresencePage.Builder builder = UserPresencePage.BUILDER.newInstance();
-      
-      builder.withData(new ArrayList<IUserPresence>(presenceModel_.getAllUsers()));
-      
-      canonConsumer.consume(builder.build(), canonTrace);
-      canonConsumer.close();
-    }
-    catch(InvalidValueException e)
-    {
-      throw new ServerErrorException(e);
-    }
+    UserPresencePage.Builder builder = UserPresencePage.BUILDER.newInstance();
+    
+    builder.withData(new ArrayList<IUserPresence>(presenceModel_.getAllUsers()));
+    
+    canonConsumer.consume(builder.build(), canonTrace);
+    canonConsumer.close();
   }
 
   @Override

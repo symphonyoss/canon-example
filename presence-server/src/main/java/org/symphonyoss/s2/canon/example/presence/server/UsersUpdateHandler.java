@@ -33,7 +33,6 @@ import org.symphonyoss.s2.canon.example.presence.canon.UsersUpdatePathHandler;
 import org.symphonyoss.s2.canon.example.presence.facade.IPresence;
 import org.symphonyoss.s2.canon.runtime.exception.ServerErrorException;
 import org.symphonyoss.s2.canon.runtime.http.IRequestAuthenticator;
-import org.symphonyoss.s2.common.exception.InvalidValueException;
 import org.symphonyoss.s2.fugue.core.trace.ITraceContext;
 
 /**
@@ -63,20 +62,12 @@ public class UsersUpdateHandler extends UsersUpdatePathHandler<String>
   	{
   	  for(IUserPresence userPresence : canonPayload.getData())
   	  {
-  	    try
-        {
-  	      presenceModel_.setUser(userPresence.getUserId(),
-              UserPresenceInfo.BUILDER.newInstance()
-                .withStatus(userPresence.getStatus())
-                .withText(userPresence.getText())
-                .build()
-              );
-        }
-        catch (InvalidValueException e)
-        {
-          log_.error("Failed to update users", e);
-          throw new ServerErrorException(e);
-        }
+  	    presenceModel_.setUser(userPresence.getUserId(),
+            UserPresenceInfo.BUILDER.newInstance()
+              .withStatus(userPresence.getStatus())
+              .withText(userPresence.getText())
+              .build()
+            );
   	  }
 	}
 
