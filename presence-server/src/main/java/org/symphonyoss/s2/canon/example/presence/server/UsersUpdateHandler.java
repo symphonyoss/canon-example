@@ -63,7 +63,7 @@ public class UsersUpdateHandler extends UsersUpdatePathHandler<String>
   	  for(IUserPresence userPresence : canonPayload.getData())
   	  {
   	    presenceModel_.setUser(userPresence.getUserId(),
-            UserPresenceInfo.BUILDER.newInstance()
+            new UserPresenceInfo.Builder()
               .withStatus(userPresence.getStatus())
               .withText(userPresence.getText())
               .build()

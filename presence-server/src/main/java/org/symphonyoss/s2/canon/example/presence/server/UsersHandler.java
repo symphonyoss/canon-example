@@ -78,7 +78,7 @@ public class UsersHandler extends UsersPathHandler<String>
   throws CanonException
   {
     System.err.println("Authenticated caller is " + canonAuth);
-    UserPresencePage.Builder builder = UserPresencePage.BUILDER.newInstance();
+    UserPresencePage.Builder builder = new UserPresencePage.Builder();
     
     builder.withData(new ArrayList<IUserPresence>(presenceModel_.getAllUsers()));
     

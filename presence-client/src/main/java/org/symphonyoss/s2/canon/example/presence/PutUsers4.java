@@ -63,7 +63,7 @@ public class PutUsers4
     IModelRegistry          registry = new ModelRegistry().withFactories(PresenceModel.FACTORIES);
     PresenceHttpModelClient client  = new PresenceHttpModelClient(registry, PresenceConstants.SERVER_URL, null, new PresenceJwtGenerator());
     
-    IUserPresenceInfo japiPayload = UserPresenceInfo.BUILDER.newInstance()
+    IUserPresenceInfo japiPayload = new UserPresenceInfo.Builder()
         .withStatus(PresenceStatus.DoNotDisturb)
         .withText("I am on the phone")
         .build();

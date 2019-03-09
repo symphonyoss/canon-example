@@ -62,7 +62,7 @@ public class Presence implements IPresence, IFugueComponent
   @Override
   public synchronized void setUser(UserId userId, IUserPresenceInfo userPresenceInfo) throws ServerErrorException
   {
-    presenceMap_.put(userId, UserPresence.BUILDER.newInstance()
+    presenceMap_.put(userId, new UserPresence.Builder()
       .withUserId(userId)
       .withStatus(userPresenceInfo.getStatus())
       .withText(userPresenceInfo.getText())
@@ -74,7 +74,7 @@ public class Presence implements IPresence, IFugueComponent
   {
     /* Load presence data for known users */
     
-    Builder presenceBuilder = UserPresence.BUILDER.newInstance();
+    Builder presenceBuilder = new UserPresence.Builder();
     UserId userId;
     
     userId = UserId.newBuilder().build((long) 1);

@@ -66,12 +66,12 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<s2.common.version>0.1.37</s2.common.version>
-		<canon.version>0.0.33-SNAPSHOT</canon.version>
+		<canon.version>0.0.34-SNAPSHOT</canon.version>
 		<canon.template.groupid>org.symphonyoss.s2.canon</canon.template.groupid>
 		<canon.template.java>canon-template-java</canon.template.java>
 		<canon.template.version>${canon.version}</canon.template.version>
 		
-		<fugue.version>0.0.62-SNAPSHOT</fugue.version>
+		<fugue.version>0.0.62</fugue.version>
     <gcp.project>sym-dev-arch</gcp.project>
 	</properties>
 
