@@ -65,8 +65,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<s2.common.version>0.2.0</s2.common.version>
-		<canon.version>0.2.0</canon.version>
+		<s2.common.version>0.2.1-SNAPSHOT</s2.common.version>
+		<canon.version>0.2.2-SNAPSHOT</canon.version>
 		<canon.template.groupid>org.symphonyoss.s2.canon</canon.template.groupid>
 		<canon.template.java>canon-template-java</canon.template.java>
 		<canon.template.version>${canon.version}</canon.template.version>

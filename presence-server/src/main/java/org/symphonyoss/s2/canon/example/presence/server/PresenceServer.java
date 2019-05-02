@@ -53,7 +53,7 @@ public class PresenceServer extends FugueServer
     Presence model    = new Presence();
     ExecutorService  executor = Executors.newFixedThreadPool(50);
     PresenceJwtGenerator generator = new PresenceJwtGenerator();
-    JwtSubjectAuthenticator authenticator = new JwtSubjectAuthenticator(generator.getKey(), 3600000L, "unknown", generator.signatureAlgorithm.toString());
+    JwtSubjectAuthenticator authenticator = new JwtSubjectAuthenticator(generator.getKey(), 3600000L, "unknown", generator.getSignatureAlgorithm().toString());
     
     PresenceModelServlet servlet = new PresenceModelServlet(new LoggerTraceContextTransactionFactory(), new ModelRegistry().withFactories(PresenceModel.FACTORIES),
 
