@@ -29,10 +29,10 @@ import java.util.concurrent.Executors;
 
 import org.symphonyoss.s2.canon.example.presence.PresenceConstants;
 import org.symphonyoss.s2.canon.example.presence.canon.PresenceModel;
-import org.symphonyoss.s2.canon.example.presence.canon.PresenceModelServlet;
 import org.symphonyoss.s2.canon.example.presence.facade.Presence;
 import org.symphonyoss.s2.canon.example.presence.facade.PresenceJwtGenerator;
 import org.symphonyoss.s2.canon.runtime.ModelRegistry;
+import org.symphonyoss.s2.canon.runtime.ModelServlet;
 import org.symphonyoss.s2.canon.runtime.jjwt.JwtSubjectAuthenticator;
 import org.symphonyoss.s2.fugue.FugueServer;
 import org.symphonyoss.s2.fugue.core.trace.log.LoggerTraceContextTransactionFactory;
@@ -55,16 +55,15 @@ public class PresenceServer extends FugueServer
     PresenceJwtGenerator generator = new PresenceJwtGenerator();
     JwtSubjectAuthenticator authenticator = new JwtSubjectAuthenticator(generator.getKey(), 3600000L, "unknown", generator.getSignatureAlgorithm().toString());
     
-    PresenceModelServlet servlet = new PresenceModelServlet(new LoggerTraceContextTransactionFactory(), new ModelRegistry().withFactories(PresenceModel.FACTORIES),
-
-        new UsersUserIdHandler(model, authenticator),
-        new UsersUserIdTestHandler(model, authenticator),
-        new UsersAsyncHandler(model, executor, executor, authenticator),
-        new UsersFetchHandler(model, authenticator),
-//        new UsersFetchAsyncHandler(model, executor, executor, authenticator),
-//      new UsersUpdateHandler(model, authenticator),
-        new UsersUpdateAsyncHandler(model, executor, executor, authenticator)
-        );
+    ModelServlet servlet = new ModelServlet(new LoggerTraceContextTransactionFactory(), new ModelRegistry().withFactories(PresenceModel.FACTORIES))
+        .withHandler(new UsersUserIdHandler(model, authenticator))
+        .withHandler(new UsersUserIdTestHandler(model, authenticator))
+        .withHandler(new UsersAsyncHandler(model, executor, executor, authenticator))
+        .withHandler(new UsersFetchHandler(model, authenticator))
+//        .withHandler(new UsersFetchAsyncHandler(model, executor, executor, authenticator))
+//        .withHandler(new UsersUpdateHandler(model, authenticator))
+        .withHandler(new UsersUpdateAsyncHandler(model, executor, executor, authenticator))
+    ;
     
     server.withComponents(model, servlet)
       .start();
