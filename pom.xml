@@ -71,7 +71,7 @@
 		<canon.template.java>canon-template-java</canon.template.java>
 		<canon.template.version>${canon.version}</canon.template.version>
 		
-		<fugue.version>0.2.18</fugue.version>
+		<fugue.version>0.2.19</fugue.version>
     <gcp.project>sym-dev-arch</gcp.project>
 	</properties>
 
