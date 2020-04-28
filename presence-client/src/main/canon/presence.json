@@ -74,9 +74,7 @@
       "get": {
         "description": "Fetch a single user's presence.",
         "response": {
-          "schema": {
-            "$ref": "#/components/schemas/UserPresence"
-          }
+          "content": "image/png"
         }
       }
     },
